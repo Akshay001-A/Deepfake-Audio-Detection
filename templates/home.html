@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Audio Detection</title>
+
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero-card">
+
+            <h1 class="title">Deepfake Audio Detection</h1>
+            <p class="subtitle">
+                Upload a .wav audio file and get instant AI-powered detection.
+            </p>
+
+            <!-- Upload -->
+            <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-form">
+
+                <!-- FIX: label handles click automatically -->
+                <label class="file-upload" id="uploadBox" for="fileInput">
+                    <input type="file" name="audio" id="fileInput" accept=".wav" required>
+                    <span id="fileText">Click or Drag & Drop Audio (.wav)</span>
+                </label>
+
+                <button class="upload-btn" type="submit">
+                    {% if result %}Analyze Another Audio{% else %}Analyze{% endif %}
+                </button>
+
+            </form>
+
+            <!-- RESULT -->
+            {% if result %}
+            <div class="result-box">
+
+                <h2 class="result-title 
+            {% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
+                    {{ prediction }}
+                </h2>
+
+                <p><b>Confidence:</b> {{ confidence }}%</p>
+
+                <audio controls class="result-audio">
+                    <source src="{{ audiopath }}" type="audio/wav">
+                </audio>
+
+            </div>
+
+            <div class="info-box">
+                <h3>Detection Info</h3>
+
+                <p><b>Analysis:</b></p>
+                <p class="info-text">{{ analysis }}</p>
+
+                <br>
+
+                <p><b>Recommendation:</b></p>
+                <p class="info-text">{{ recommendation }}</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <!-- SCRIPT -->
+    <script>
+        const uploadBox = document.getElementById("uploadBox");
+        const input = document.getElementById("fileInput");
+        const fileText = document.getElementById("fileText");
+
+        // Show file name
+        input.addEventListener("change", function () {
+            fileText.innerText = this.files[0]?.name || "Select Audio";
+        });
+
+        // Drag over
+        uploadBox.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadBox.style.borderColor = "#00ffa2";
+        });
+
+        // Drop file
+        uploadBox.addEventListener("drop", (e) => {
+            e.preventDefault();
+            input.files = e.dataTransfer.files;
+            fileText.innerText = e.dataTransfer.files[0].name;
+        });
+
+        // Reset border
+        uploadBox.addEventListener("dragleave", () => {
+            uploadBox.style.borderColor = "rgba(255,255,255,0.3)";
+        });
+    </script>
+
+</body>
+
+</html>
