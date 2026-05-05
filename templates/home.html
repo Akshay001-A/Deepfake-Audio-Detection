@@ -11,6 +11,9 @@
 <!-- MENU -->
 <div class="menu-btn" onclick="toggleSidebar()">☰</div>
 
+<!-- ✅ OVERLAY (VERY IMPORTANT) -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <h2>Deepfake</h2>
@@ -19,72 +22,78 @@
 </div>
 
 <!-- MAIN -->
- <section class="home">
+<section class="home">
 
-    <div class="big-card">
+    <div class="home-container">
 
-        <h1 class="main-title">Deepfake Audio Detection</h1>
+        <div class="big-card">
 
-        <p class="tagline">
-            Upload a .wav audio file and get instant detection.
-        </p>
+            <h1>Deepfake Audio Detection</h1>
 
-        <!-- UPLOAD -->
-        <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-area">
+            <p class="home-sub">
+                Upload a .wav audio file and get instant detection.
+            </p>
 
-            <label class="upload-box">
-                <input type="file" name="audio" accept=".wav" required>
-                Click or Drag & Drop Audio (.wav)
-            </label>
+            <!-- UPLOAD -->
+            <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-area">
 
-            <button class="analyze-btn" type="submit">
-                {% if result %}Analyze Another Audio{% else %}Analyze{% endif %}
-            </button>
+                <label class="upload-box">
+                    <input type="file" name="audio" accept=".wav" required id="fileInput">
+                    <span id="fileText">Click or Drag & Drop Audio (.wav)</span>
+                </label>
 
-        </form>
+                <button class="analyze-btn" type="submit">Analyze</button>
 
-        <!-- RESULT -->
-        {% if result %}
+            </form>
 
-        <!-- RESULT BOX -->
-        <div class="inner-card">
+            <!-- RESULT -->
+            {% if result %}
+            <div class="result-section">
 
-            <h2 class="{% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
-                {{ prediction }}
-            </h2>
+                <div class="inner-card">
+                    <h2 class="{% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
+                        {{ prediction }}
+                    </h2>
 
-            <p><b>Confidence:</b> {{ confidence }}%</p>
+                    <p><b>Confidence:</b> {{ confidence }}%</p>
 
-            <audio controls>
-                <source src="{{ audiopath }}" type="audio/wav">
-            </audio>
+                    <audio controls>
+                        <source src="{{ audiopath }}" type="audio/wav">
+                    </audio>
+                </div>
 
-        </div>
+                <div class="inner-card">
+                    <h3>Detection Info</h3>
 
-        <!-- INFO BOX -->
-        <div class="inner-card info-card">
+                    <p><b>Analysis:</b> {{ analysis }}</p>
+                    <p><b>Recommendation:</b> {{ recommendation }}</p>
+                </div>
 
-            <h3>Detection Info</h3>
-
-            <p><b>Analysis:</b></p>
-            <p>{{ analysis }}</p>
-
-            <br>
-
-            <p><b>Recommendation:</b></p>
-            <p>{{ recommendation }}</p>
+            </div>
+            {% endif %}
 
         </div>
-
-        {% endif %}
 
     </div>
 
 </section>
+
+<!-- SCRIPT -->
 <script>
 function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
 }
+
+/* FILE NAME SHOW */
+const fileInput = document.getElementById("fileInput");
+const fileText = document.getElementById("fileText");
+
+fileInput.addEventListener("change", function () {
+    if (this.files.length > 0) {
+        fileText.textContent = this.files[0].name;
+    }
+});
 </script>
 
 </body>

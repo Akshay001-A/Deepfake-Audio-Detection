@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deepfake Audio Detection</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -12,7 +14,7 @@
 
     <!-- LEFT IMAGE -->
     <div class="side-image">
-        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}">
+        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
     </div>
 
     <!-- CENTER -->
@@ -44,15 +46,13 @@
         </div>
 
         <!-- BUTTON -->
-        <a href="/home">
-            <button class="cta-btn">Get Started →</button>
-        </a>
+        <a href="/home" class="cta-btn">Get Started →</a>
 
     </div>
 
     <!-- RIGHT IMAGE -->
     <div class="side-image">
-        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}">
+        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
     </div>
 
 </section>
