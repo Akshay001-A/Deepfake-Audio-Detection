@@ -64,6 +64,9 @@ def landing():
 def home():
     return render_template('home.html')
 
+@app.route('/record')
+def record():
+    return render_template('record.html')
 
 @app.route('/uploadaudio/<path:filename>')
 def uploaded_audio(filename):

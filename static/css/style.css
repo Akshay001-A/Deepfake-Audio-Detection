@@ -327,3 +327,33 @@ audio {
         width: 240px;
     }
 }
+
+
+/* ========================= */
+/* RECORD PAGE */
+/* ========================= */
+
+.record-btn {
+    padding: 15px 30px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    background: linear-gradient(90deg, #00ffa2, #00c3ff);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.record-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,150,0.6);
+}
+
+#audioPlayback {
+    margin-top: 20px;
+    width: 100%;
+}
+
+#downloadLink {
+    margin-top: 20px;
+    display: inline-block;
+}

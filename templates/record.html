@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Record Audio</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- MENU -->
+<div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>Deepfake</h2>
+    <a href="/home">🏠 Home</a>
+    <a href="/record">🎤 Record Audio</a>
+    <a href="/">ℹ️ About</a>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- MAIN -->
+<div id="mainContent">
+
+<section class="home">
+<div class="home-container">
+
+<div class="big-card">
+
+    <h1>Record Your Audio</h1>
+    <p class="home-sub">
+        Record 3–10 seconds of audio and download it as .wav
+    </p>
+
+    <!-- CONTROLS -->
+    <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-bottom:25px;">
+
+        <button id="startBtn" class="analyze-btn" onclick="startRecording()">🎤 Record</button>
+
+        <button id="pauseBtn" class="analyze-btn" onclick="pauseRecording()" disabled>
+            ⏸ Pause
+        </button>
+
+        <button id="stopBtn" class="analyze-btn" onclick="stopRecording()" disabled>
+            ⏹ Stop
+        </button>
+
+        <button id="resetBtn" class="analyze-btn" onclick="resetRecording()" disabled>
+            🔄 Record Again
+        </button>
+
+    </div>
+
+    <!-- AUDIO PLAYER -->
+    <audio id="audioPlayback" controls></audio>
+
+    <!-- DOWNLOAD -->
+    <br><br>
+    <a id="downloadLink" class="analyze-btn" style="display:none;">Download .wav</a>
+
+</div>
+
+</div>
+</section>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+/* ========================= */
+/* RECORDING LOGIC */
+/* ========================= */
+
+let mediaRecorder;
+let audioChunks = [];
+let stream;
+let timerInterval;
+let seconds = 0;
+
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const stopBtn = document.getElementById("stopBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const audioPlayer = document.getElementById("audioPlayback");
+
+/* START */
+async function startRecording() {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    seconds = 0;
+
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+    mediaRecorder.onstop = () => {
+        clearInterval(timerInterval);
+
+        const blob = new Blob(audioChunks, { type: "audio/wav" });
+        const url = URL.createObjectURL(blob);
+
+        audioPlayer.src = url;
+
+        const download = document.getElementById("downloadLink");
+        download.href = url;
+        download.download = "recorded_audio.wav";
+        download.style.display = "inline-block";
+    };
+
+    mediaRecorder.start();
+
+    /* LIVE TIMER */
+    timerInterval = setInterval(() => {
+        seconds++;
+        audioPlayer.currentTime = seconds;
+    }, 1000);
+
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    stopBtn.disabled = false;
+
+    // auto stop after 10 sec
+    setTimeout(() => {
+        if (mediaRecorder.state === "recording") {
+            stopRecording();
+        }
+    }, 10000);
+}
+
+/* PAUSE / RESUME */
+function pauseRecording() {
+    if (mediaRecorder.state === "recording") {
+        mediaRecorder.pause();
+        clearInterval(timerInterval);
+        pauseBtn.textContent = "▶ Resume";
+    } else {
+        mediaRecorder.resume();
+
+        timerInterval = setInterval(() => {
+            seconds++;
+            audioPlayer.currentTime = seconds;
+        }, 1000);
+
+        pauseBtn.textContent = "⏸ Pause";
+    }
+}
+
+/* STOP */
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        stream.getTracks().forEach(track => track.stop());
+    }
+
+    clearInterval(timerInterval);
+
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    resetBtn.disabled = false;
+}
+
+/* RESET */
+function resetRecording() {
+    audioPlayer.src = "";
+    document.getElementById("downloadLink").style.display = "none";
+
+    seconds = 0;
+
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    resetBtn.disabled = true;
+
+    pauseBtn.textContent = "⏸ Pause";
+}
+</script>
+
+</body>
+</html>
