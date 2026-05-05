@@ -8,85 +8,80 @@
 
 <body>
 
-<div class="container">
+<!-- MENU BUTTON -->
+<div class="menu-btn" onclick="toggleSidebar()">☰</div>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>Deepfake AI</h2>
-        <a href="/home">🏠 Home</a>
-        <a href="/">ℹ️ About</a>
-    </div>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>Deepfake</h2>
+    <a href="/home">🏠 Home</a>
+    <a href="/">ℹ️ About</a>
+</div>
 
-    <!-- MAIN -->
-    <div class="main-content">
+<!-- MAIN -->
+<div class="main-content" id="main">
 
-        <section class="hero">
-            <div class="hero-card">
+<section class="hero">
+    <div class="hero-card big-card">
 
-                <h1 class="title">Deepfake Audio Detection</h1>
+        <h1 class="title">Deepfake Audio Detection</h1>
 
-                <p class="subtitle">
-                    Upload a .wav audio file and get AI detection.
-                </p>
+        <p class="subtitle">
+            Upload a .wav file and analyze authenticity of audio content.
+        </p>
 
-                <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-form">
+        <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-form">
 
-                    <label class="file-upload" id="uploadBox">
-                        <input type="file" name="audio" id="fileInput" accept=".wav" required>
-                        <span id="fileText">Click or Drag Audio (.wav)</span>
-                    </label>
+            <label class="file-upload" id="uploadBox">
+                <input type="file" name="audio" id="fileInput" accept=".wav" required>
+                <span id="fileText">Click or Drag Audio (.wav)</span>
+            </label>
 
-                    <button class="upload-btn" type="submit">
-                        {% if result %}Analyze Again{% else %}Analyze{% endif %}
-                    </button>
+            <button class="upload-btn" type="submit">
+                {% if result %}Analyze Again{% else %}Analyze{% endif %}
+            </button>
 
-                </form>
+        </form>
 
-                {% if result %}
-                <div class="result-box">
+        {% if result %}
+        <div class="result-box">
 
-                    <h2 class="result-title 
-                    {% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
-                        {{ prediction }}
-                    </h2>
+            <h2 class="result-title 
+            {% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
+                {{ prediction }}
+            </h2>
 
-                    <p><b>Confidence:</b> {{ confidence }}%</p>
+            <p><b>Confidence:</b> {{ confidence }}%</p>
 
-                    <audio controls class="result-audio">
-                        <source src="{{ audiopath }}" type="audio/wav">
-                    </audio>
+            <audio controls class="result-audio">
+                <source src="{{ audiopath }}" type="audio/wav">
+            </audio>
 
-                </div>
+        </div>
 
-                <div class="info-box">
-                    <p><b>Analysis:</b> {{ analysis }}</p>
-                    <p><b>Recommendation:</b> {{ recommendation }}</p>
-                </div>
-                {% endif %}
-
-            </div>
-        </section>
+        <div class="info-box">
+            <p><b>Analysis:</b> {{ analysis }}</p>
+            <p><b>Recommendation:</b> {{ recommendation }}</p>
+        </div>
+        {% endif %}
 
     </div>
+</section>
+
 </div>
 
 <script>
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+
 const uploadBox = document.getElementById("uploadBox");
 const input = document.getElementById("fileInput");
 const fileText = document.getElementById("fileText");
 
 input.addEventListener("change", function () {
     fileText.innerText = this.files[0]?.name || "Select Audio";
-});
-
-uploadBox.addEventListener("dragover", (e) => {
-    e.preventDefault();
-});
-
-uploadBox.addEventListener("drop", (e) => {
-    e.preventDefault();
-    input.files = e.dataTransfer.files;
-    fileText.innerText = e.dataTransfer.files[0].name;
 });
 </script>
 
