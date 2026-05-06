@@ -7,6 +7,7 @@ import librosa
 import joblib
 import random
 from collections import Counter
+from TTS.api import TTS
 
 app = Flask(__name__)
 
@@ -192,6 +193,19 @@ def upload_audio():
     )
 
 
+
+# =========================
+# LOAD XTTS MODEL
+# =========================
+print("Loading XTTS model...")
+
+xtts_model = TTS(
+    model_name="tts_models/multilingual/multi-dataset/xtts_v2"
+)
+
+print("XTTS model loaded successfully")
+
+
 # =========================
 # AI VOICE CONVERT ROUTE
 # =========================
@@ -199,7 +213,6 @@ def upload_audio():
 def convert_audio():
 
     if 'audio' not in request.files:
-
         return render_template(
             "convert.html",
             message="No file uploaded"
@@ -208,14 +221,12 @@ def convert_audio():
     audio = request.files['audio']
 
     if audio.filename == "":
-
         return render_template(
             "convert.html",
             message="No selected file"
         )
 
     if not audio.filename.lower().endswith(".wav"):
-
         return render_template(
             "convert.html",
             message="Please upload only .wav file"
@@ -223,27 +234,49 @@ def convert_audio():
 
     os.makedirs("uploadaudio", exist_ok=True)
 
-    filename = f"uploadaudio/ai_{uuid.uuid4().hex}.wav"
+    # =========================
+    # SAVE ORIGINAL AUDIO
+    # =========================
+    original_audio = f"uploadaudio/original_{uuid.uuid4().hex}.wav"
 
-    audio.save(filename)
+    audio.save(original_audio)
 
-    # ==================================
-    # TEMPORARY AI CONVERSION PLACEHOLDER
-    # ==================================
-    # Later you can integrate:
-    # - Coqui TTS
-    # - Bark AI
-    # - ElevenLabs
-    # - gTTS
-    # - Voice Cloning Models
+    # =========================
+    # OUTPUT AI AUDIO
+    # =========================
+    ai_audio = f"uploadaudio/ai_{uuid.uuid4().hex}.wav"
+
+    # =========================
+    # AI VOICE GENERATION
+    # =========================
+    try:
+
+        xtts_model.tts_to_file(
+            text="Hello, this is AI generated speech created for deepfake detection testing.",
+            speaker_wav=original_audio,
+            language="en",
+            file_path=ai_audio
+        )
+
+    except Exception as e:
+
+        return render_template(
+            "convert.html",
+            message=f"AI conversion failed: {str(e)}"
+        )
+
+    # =========================
+    # DETECT AI AUDIO
+    # =========================
+    label, confidence = model_predict(ai_audio)
 
     return render_template(
-
         "convert.html",
-
-        message="Audio uploaded successfully",
-
-        audiopath='/' + filename
+        message="AI voice generated successfully",
+        original_audio='/' + original_audio,
+        ai_audio='/' + ai_audio,
+        prediction=label,
+        confidence=confidence
     )
 
 

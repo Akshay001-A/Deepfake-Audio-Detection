@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Record Audio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -12,16 +15,27 @@
 <div class="menu-btn" onclick="toggleSidebar()">☰</div>
 
 <!-- OVERLAY -->
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div class="overlay"
+     id="overlay"
+     onclick="toggleSidebar()"></div>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
+
     <div>
+
         <h2>Deepfake</h2>
+
         <a href="/home">🏠 Home</a>
+
         <a href="/record">🎤 Record Audio</a>
+
+        <a href="/convert">🤖 AI Voice Convert</a>
+
         <a href="/">ℹ️ About</a>
+
     </div>
+
 </div>
 
 <!-- MAIN -->
@@ -34,30 +48,69 @@
             <h1>Record Your Audio</h1>
 
             <p class="home-sub">
-                Record 3–10 seconds of audio and download it as .wav
+                Record 3–10 seconds of audio and
+                download it for detection.
             </p>
 
             <!-- BUTTONS -->
             <div class="upload-area">
 
-                <button class="record-btn" id="startBtn" onclick="startRecording()">🎤 Record</button>
+                <button class="record-btn"
+                        id="startBtn"
+                        onclick="startRecording()">
 
-                <button class="record-btn" id="pauseBtn" onclick="pauseRecording()" disabled>⏸ Pause</button>
+                    🎤 Record
 
-                <button class="record-btn" id="stopBtn" onclick="stopRecording()" disabled>⏹ Stop</button>
+                </button>
 
-                <button class="record-btn" id="resetBtn" onclick="resetRecording()" disabled>🔄 Record Again</button>
+                <button class="record-btn"
+                        id="pauseBtn"
+                        onclick="pauseRecording()"
+                        disabled>
+
+                    ⏸ Pause
+
+                </button>
+
+                <button class="record-btn"
+                        id="stopBtn"
+                        onclick="stopRecording()"
+                        disabled>
+
+                    ⏹ Stop
+
+                </button>
+
+                <button class="record-btn"
+                        id="resetBtn"
+                        onclick="resetRecording()"
+                        disabled>
+
+                    🔄 Record Again
+
+                </button>
 
             </div>
 
             <!-- AUDIO -->
             <div class="result-section">
-                <audio id="audioPlayback" controls></audio>
+
+                <audio id="audioPlayback"
+                       controls></audio>
+
             </div>
 
             <!-- DOWNLOAD -->
             <div class="result-section">
-                <a id="downloadLink" class="cta-btn" style="display:none;">Download .wav</a>
+
+                <a id="downloadLink"
+                   class="cta-btn"
+                   style="display:none;">
+
+                    Download Audio
+
+                </a>
+
             </div>
 
         </div>
@@ -68,117 +121,225 @@
 
 <!-- SCRIPT -->
 <script>
+
+/* ========================= */
+/* SIDEBAR */
+/* ========================= */
+
 function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
+
+    document.getElementById("sidebar")
+            .classList.toggle("active");
+
+    document.getElementById("overlay")
+            .classList.toggle("active");
 }
+
+/* ========================= */
+/* VARIABLES */
+/* ========================= */
 
 let mediaRecorder;
+
 let audioChunks = [];
+
 let stream;
+
 let timerInterval;
+
 let seconds = 0;
 
-const audioPlayer = document.getElementById("audioPlayback");
+const audioPlayer =
+    document.getElementById("audioPlayback");
 
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const stopBtn = document.getElementById("stopBtn");
-const resetBtn = document.getElementById("resetBtn");
+const startBtn =
+    document.getElementById("startBtn");
 
+const pauseBtn =
+    document.getElementById("pauseBtn");
+
+const stopBtn =
+    document.getElementById("stopBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+/* ========================= */
 /* START RECORD */
+/* ========================= */
+
 async function startRecording() {
-    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    mediaRecorder = new MediaRecorder(stream);
-    audioChunks = [];
-    seconds = 0;
+    try {
 
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        stream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
 
-    mediaRecorder.onstop = () => {
-        clearInterval(timerInterval);
+        /* REAL SUPPORTED FORMAT */
+        mediaRecorder = new MediaRecorder(stream, {
+            mimeType: 'audio/webm'
+        });
 
-        const blob = new Blob(audioChunks, { type: "audio/wav" });
-        const url = URL.createObjectURL(blob);
+        audioChunks = [];
 
-        audioPlayer.src = url;
+        seconds = 0;
 
-        const download = document.getElementById("downloadLink");
-        download.href = url;
-        download.download = "recorded_audio.wav";
-        download.style.display = "inline-block";
-    };
+        mediaRecorder.ondataavailable = e => {
 
-    mediaRecorder.start();
+            if (e.data.size > 0) {
 
-    /* 🔥 FAKE PROGRESS ON AUDIO BAR */
-    audioPlayer.src = "";
-    audioPlayer.currentTime = 0;
+                audioChunks.push(e.data);
+            }
+        };
 
-    timerInterval = setInterval(() => {
-        seconds++;
-        audioPlayer.currentTime = seconds; // moves bar
-    }, 1000);
+        mediaRecorder.onstop = () => {
 
-    startBtn.disabled = true;
-    pauseBtn.disabled = false;
-    stopBtn.disabled = false;
+            clearInterval(timerInterval);
 
-    // auto stop after 10 sec
-    setTimeout(() => {
-        if (mediaRecorder.state === "recording") {
-            stopRecording();
-        }
-    }, 10000);
+            /* CREATE WEBM AUDIO */
+            const blob = new Blob(audioChunks, {
+                type: "audio/webm"
+            });
+
+            const url = URL.createObjectURL(blob);
+
+            /* PLAYBACK */
+            audioPlayer.src = url;
+
+            /* DOWNLOAD */
+            const download =
+                document.getElementById("downloadLink");
+
+            download.href = url;
+
+            download.download = "recorded_audio.webm";
+
+            download.style.display = "inline-block";
+        };
+
+        mediaRecorder.start();
+
+        /* TIMER */
+        timerInterval = setInterval(() => {
+
+            seconds++;
+
+        }, 1000);
+
+        startBtn.disabled = true;
+
+        pauseBtn.disabled = false;
+
+        stopBtn.disabled = false;
+
+        /* AUTO STOP AFTER 10 SEC */
+        setTimeout(() => {
+
+            if (
+                mediaRecorder &&
+                mediaRecorder.state === "recording"
+            ) {
+
+                stopRecording();
+            }
+
+        }, 10000);
+
+    }
+
+    catch (error) {
+
+        alert(
+            "Microphone access denied or not supported."
+        );
+
+        console.error(error);
+    }
 }
 
+/* ========================= */
 /* PAUSE / RESUME */
+/* ========================= */
+
 function pauseRecording() {
+
+    if (!mediaRecorder) return;
+
     if (mediaRecorder.state === "recording") {
+
         mediaRecorder.pause();
+
         clearInterval(timerInterval);
+
         pauseBtn.textContent = "▶ Resume";
-    } else {
+    }
+
+    else {
+
         mediaRecorder.resume();
 
         timerInterval = setInterval(() => {
+
             seconds++;
-            audioPlayer.currentTime = seconds;
+
         }, 1000);
 
         pauseBtn.textContent = "⏸ Pause";
     }
 }
 
+/* ========================= */
 /* STOP */
+/* ========================= */
+
 function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+
+    if (
+        mediaRecorder &&
+        mediaRecorder.state !== "inactive"
+    ) {
+
         mediaRecorder.stop();
-        stream.getTracks().forEach(track => track.stop());
+
+        stream.getTracks().forEach(track =>
+            track.stop()
+        );
     }
 
     clearInterval(timerInterval);
 
     pauseBtn.disabled = true;
+
     stopBtn.disabled = true;
+
     resetBtn.disabled = false;
 }
 
+/* ========================= */
 /* RESET */
+/* ========================= */
+
 function resetRecording() {
+
     audioPlayer.src = "";
-    document.getElementById("downloadLink").style.display = "none";
+
+    document.getElementById("downloadLink")
+            .style.display = "none";
 
     seconds = 0;
 
     startBtn.disabled = false;
+
     pauseBtn.disabled = true;
+
     stopBtn.disabled = true;
+
     resetBtn.disabled = true;
 
     pauseBtn.textContent = "⏸ Pause";
 }
+
 </script>
 
 </body>
