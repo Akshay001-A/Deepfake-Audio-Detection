@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Record Audio</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <title>Record Audio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -11,62 +11,60 @@
 <!-- MENU -->
 <div class="menu-btn" onclick="toggleSidebar()">☰</div>
 
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-    <h2>Deepfake</h2>
-    <a href="/home">🏠 Home</a>
-    <a href="/record">🎤 Record Audio</a>
-    <a href="/">ℹ️ About</a>
+    <div>
+        <h2>Deepfake</h2>
+        <a href="/home">🏠 Home</a>
+        <a href="/record">🎤 Record Audio</a>
+        <a href="/">ℹ️ About</a>
+    </div>
 </div>
 
-<!-- OVERLAY -->
-<div id="overlay" onclick="toggleSidebar()"></div>
-
 <!-- MAIN -->
-<div id="mainContent">
-
 <section class="home">
-<div class="home-container">
 
-<div class="big-card">
+    <div class="home-container">
 
-    <h1>Record Your Audio</h1>
-    <p class="home-sub">
-        Record 3–10 seconds of audio and download it as .wav
-    </p>
+        <div class="big-card">
 
-    <!-- CONTROLS -->
-    <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-bottom:25px;">
+            <h1>Record Your Audio</h1>
 
-        <button id="startBtn" class="analyze-btn" onclick="startRecording()">🎤 Record</button>
+            <p class="home-sub">
+                Record 3–10 seconds of audio and download it as .wav
+            </p>
 
-        <button id="pauseBtn" class="analyze-btn" onclick="pauseRecording()" disabled>
-            ⏸ Pause
-        </button>
+            <!-- BUTTONS -->
+            <div class="upload-area">
 
-        <button id="stopBtn" class="analyze-btn" onclick="stopRecording()" disabled>
-            ⏹ Stop
-        </button>
+                <button class="record-btn" id="startBtn" onclick="startRecording()">🎤 Record</button>
 
-        <button id="resetBtn" class="analyze-btn" onclick="resetRecording()" disabled>
-            🔄 Record Again
-        </button>
+                <button class="record-btn" id="pauseBtn" onclick="pauseRecording()" disabled>⏸ Pause</button>
+
+                <button class="record-btn" id="stopBtn" onclick="stopRecording()" disabled>⏹ Stop</button>
+
+                <button class="record-btn" id="resetBtn" onclick="resetRecording()" disabled>🔄 Record Again</button>
+
+            </div>
+
+            <!-- AUDIO -->
+            <div class="result-section">
+                <audio id="audioPlayback" controls></audio>
+            </div>
+
+            <!-- DOWNLOAD -->
+            <div class="result-section">
+                <a id="downloadLink" class="cta-btn" style="display:none;">Download .wav</a>
+            </div>
+
+        </div>
 
     </div>
 
-    <!-- AUDIO PLAYER -->
-    <audio id="audioPlayback" controls></audio>
-
-    <!-- DOWNLOAD -->
-    <br><br>
-    <a id="downloadLink" class="analyze-btn" style="display:none;">Download .wav</a>
-
-</div>
-
-</div>
 </section>
-
-</div>
 
 <!-- SCRIPT -->
 <script>
@@ -75,24 +73,20 @@ function toggleSidebar() {
     document.getElementById("overlay").classList.toggle("active");
 }
 
-/* ========================= */
-/* RECORDING LOGIC */
-/* ========================= */
-
 let mediaRecorder;
 let audioChunks = [];
 let stream;
 let timerInterval;
 let seconds = 0;
 
+const audioPlayer = document.getElementById("audioPlayback");
+
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const stopBtn = document.getElementById("stopBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-const audioPlayer = document.getElementById("audioPlayback");
-
-/* START */
+/* START RECORD */
 async function startRecording() {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
@@ -118,10 +112,13 @@ async function startRecording() {
 
     mediaRecorder.start();
 
-    /* LIVE TIMER */
+    /* 🔥 FAKE PROGRESS ON AUDIO BAR */
+    audioPlayer.src = "";
+    audioPlayer.currentTime = 0;
+
     timerInterval = setInterval(() => {
         seconds++;
-        audioPlayer.currentTime = seconds;
+        audioPlayer.currentTime = seconds; // moves bar
     }, 1000);
 
     startBtn.disabled = true;
