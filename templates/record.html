@@ -176,9 +176,9 @@ async function startRecording() {
             audio: true
         });
 
-        /* REAL SUPPORTED FORMAT */
+        /* CLEAN AUDIO FORMAT */
         mediaRecorder = new MediaRecorder(stream, {
-            mimeType: 'audio/webm'
+            mimeType: 'audio/webm;codecs=opus'
         });
 
         audioChunks = [];
@@ -197,15 +197,16 @@ async function startRecording() {
 
             clearInterval(timerInterval);
 
-            /* CREATE WEBM AUDIO */
+            /* CREATE AUDIO */
             const blob = new Blob(audioChunks, {
-                type: "audio/webm"
+                type: "audio/webm;codecs=opus"
             });
 
             const url = URL.createObjectURL(blob);
 
             /* PLAYBACK */
             audioPlayer.src = url;
+            audioPlayer.load();
 
             /* DOWNLOAD */
             const download =

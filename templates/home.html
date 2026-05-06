@@ -155,8 +155,7 @@ const fileInput = document.getElementById("fileInput");
 
 const fileText = document.getElementById("fileText");
 
-/* CLICK BOX */
-dropArea.addEventListener("click", () => fileInput.click());
+/* CLICK BOX *
 
 /* VALIDATE FILE */
 function validateFile(file) {
@@ -246,14 +245,21 @@ document.querySelector(".upload-area").addEventListener("submit", function(e) {
         return;
     }
 
-    if (!file.name.toLowerCase().endsWith(".wav")) {
+  if (
+    !file.name.toLowerCase().endsWith(".wav")
+    &&
+    !file.name.toLowerCase().endsWith(".mp3")
+    &&
+    !file.name.toLowerCase().endsWith(".webm")
+  ) {
 
-        fileText.innerHTML = "❌ Only .wav file allowed";
+      fileText.innerHTML =
+        "❌ Only .wav, .mp3 and .webm files allowed";
 
-        fileText.style.color = "#ff4d4d";
+     fileText.style.color = "#ff4d4d";
 
-        e.preventDefault();
-    }
+     e.preventDefault();
+  }
 });
 
 </script>
