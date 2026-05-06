@@ -1,2 +1,7 @@
 uploadaudio/
 *.wav
+venv/
+__pycache__/
+*.pyc
+uploads/
+converted/
