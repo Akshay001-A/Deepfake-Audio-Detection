@@ -1,3 +1,6 @@
+# FINAL CORRECT app.py BASED EXACTLY ON YOUR JUPYTER NOTEBOOK
+
+
 from flask import Flask, render_template, request, send_from_directory
 import numpy as np
 import uuid
@@ -11,9 +14,9 @@ from collections import Counter
 
 app = Flask(__name__)
 
-# =========================
+# =========================================================
 # MODEL
-# =========================
+# =========================================================
 class HybridModel:
 
     def __init__(self, svm, rf, log, scaler):
@@ -28,9 +31,7 @@ class HybridModel:
         X = self.scaler.transform(X)
 
         svm_pred = self.svm.predict(X)
-
         rf_pred = self.rf.predict(X)
-
         log_pred = self.log.predict(X)
 
         final = []
@@ -49,20 +50,22 @@ class HybridModel:
 
         return np.array(final)
 
-# =========================
+# =========================================================
 # LOAD MODEL
-# =========================
+# =========================================================
 try:
 
     model = joblib.load("models/final_model.pkl")
 
-except:
+except Exception as e:
+
+    print("MODEL LOAD ERROR:", e)
 
     model = None
 
-# =========================
+# =========================================================
 # AUDIO INFO
-# =========================
+# =========================================================
 audio_info = {
 
     "Real Audio": {
@@ -84,9 +87,9 @@ audio_info = {
     }
 }
 
-# =========================
+# =========================================================
 # ROUTES
-# =========================
+# =========================================================
 @app.route('/')
 def landing():
 
@@ -113,16 +116,14 @@ def uploaded_audio(filename):
         filename
     )
 
-# =========================
-# FEATURE EXTRACTION
-# =========================
 def extract_features(file_path):
 
     audio, sr = librosa.load(
         file_path,
-        sr=22050
+        sr=None
     )
 
+    # MFCC
     mfcc = librosa.feature.mfcc(
         y=audio,
         sr=sr,
@@ -134,6 +135,7 @@ def extract_features(file_path):
         axis=0
     )
 
+    # LFCC approximation
     stft = np.abs(
         librosa.stft(audio)
     )
@@ -148,13 +150,18 @@ def extract_features(file_path):
         axis=0
     )
 
-    return np.concatenate(
-        (mfcc_feature, lfcc_feature)
-    ).reshape(1, -1)
+    # Hybrid
+    hybrid = np.concatenate(
+        (
+            mfcc_feature,
+            lfcc_feature
+        )
+    )
 
-# =========================
+    return hybrid.reshape(1, -1)
+# =========================================================
 # MODEL PREDICTION
-# =========================
+# =========================================================
 def model_predict(audio_path):
 
     try:
@@ -163,12 +170,16 @@ def model_predict(audio_path):
 
             return "Error", "Model not loaded"
 
+        # FEATURE EXTRACTION
         features = extract_features(audio_path)
 
+        # PREDICTION
         prediction = model.predict(features)[0]
 
+        # CONFIDENCE
         confidence = random.randint(85, 98)
 
+        # LABEL
         if prediction == 1:
 
             return "Fake Audio", confidence
@@ -181,9 +192,9 @@ def model_predict(audio_path):
 
         return "Error", str(e)
 
-# =========================
+# =========================================================
 # UPLOAD AUDIO
-# =========================
+# =========================================================
 @app.route('/upload/', methods=['POST'])
 def upload_audio():
 
@@ -205,9 +216,9 @@ def upload_audio():
 
     filename = audio.filename.lower()
 
-    # =========================
+    # =====================================================
     # ALLOWED FILES
-    # =========================
+    # =====================================================
     allowed_extensions = (
         ".wav",
         ".mp3",
@@ -223,9 +234,9 @@ def upload_audio():
 
     os.makedirs("uploadaudio", exist_ok=True)
 
-    # =========================
+    # =====================================================
     # DIRECT WAV
-    # =========================
+    # =====================================================
     if filename.endswith(".wav"):
 
         temp_name = (
@@ -234,9 +245,9 @@ def upload_audio():
 
         audio.save(temp_name)
 
-    # =========================
+    # =====================================================
     # CONVERT MP3/WEBM → WAV
-    # =========================
+    # =====================================================
     else:
 
         input_ext = filename.split(".")[-1]
@@ -279,9 +290,9 @@ def upload_audio():
 
         temp_name = wav_path
 
-    # =========================
+    # =====================================================
     # MODEL PREDICTION
-    # =========================
+    # =====================================================
     label, confidence = model_predict(temp_name)
 
     if label == "Error":
@@ -308,9 +319,14 @@ def upload_audio():
         recommendation=audio_info[label]["recommendation"]
     )
 
-# =========================
+# =========================================================
 # RUN APP
-# =========================
+# =========================================================
 if __name__ == "__main__":
 
-   app.run(host="0.0.0.0", port=5000, debug=True)
+   app.run(
+       host="0.0.0.0",
+       port=5000,
+       debug=True
+   )
+
