@@ -2,7 +2,6 @@
 
 # 🎧 Deepfake Audio Detection 🚀
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9jc3V4dTg0dWJpbmR2dHBmYmJxbG9lOHMwMXN3N3c5bWw5aCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0HlBO7eyXzSZkJri/giphy.gif" width="250"/>
 
 ### 🧠 AI-Powered Audio Deepfake Detection System
 
