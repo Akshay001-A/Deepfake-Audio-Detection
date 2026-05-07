@@ -116,182 +116,49 @@ def uploaded_audio(filename):
         filename
     )
 
-# =========================================================
-# FEATURE EXTRACTION
-# =========================================================
 def extract_features(file_path):
 
-    # =====================================================
-    # LOAD AUDIO
-    # =====================================================
     audio, sr = librosa.load(
         file_path,
         sr=None
     )
 
-    # =====================================================
-    # PRE-EMPHASIS
-    # =====================================================
-    pre_emphasis = 0.97
-
-    emphasized_signal = np.append(
-        audio[0],
-        audio[1:] - pre_emphasis * audio[:-1]
-    )
-
-    # =====================================================
-    # MFCC FEATURE EXTRACTION
-    # =====================================================
-
-    # -----------------------------
-    # FRAME BLOCKING
-    # -----------------------------
-    frame_size = 0.025
-    frame_stride = 0.01
-
-    frame_length = int(frame_size * sr)
-    frame_step = int(frame_stride * sr)
-
-    frames = librosa.util.frame(
-        emphasized_signal,
-        frame_length=frame_length,
-        hop_length=frame_step
-    ).T.copy()
-
-    # -----------------------------
-    # WINDOWING
-    # -----------------------------
-    frames_windowed = (
-        frames * np.hamming(frame_length)
-    )
-
-    # -----------------------------
-    # FFT
-    # -----------------------------
-    NFFT = 512
-
-    fft_frames = np.fft.rfft(
-        frames_windowed,
-        NFFT
-    )
-
-    magnitude = np.abs(fft_frames)
-
-    power_spectrum = (
-        1.0 / NFFT
-    ) * (magnitude ** 2)
-
-    # -----------------------------
-    # MEL FILTER BANK
-    # -----------------------------
-    mel_filters = librosa.filters.mel(
+    # MFCC
+    mfcc = librosa.feature.mfcc(
+        y=audio,
         sr=sr,
-        n_fft=NFFT,
-        n_mels=40
+        n_mfcc=13
     )
-
-    mel_energy = np.dot(
-        power_spectrum,
-        mel_filters.T
-    )
-
-    # -----------------------------
-    # LOG ENERGY
-    # -----------------------------
-    log_mel = np.log(
-        mel_energy + 1e-8
-    )
-
-    # -----------------------------
-    # DCT → MFCC
-    # -----------------------------
-    from scipy.fftpack import dct
-
-    mfcc = dct(
-        log_mel,
-        type=2,
-        axis=1,
-        norm='ortho'
-    )[:, :13]
 
     mfcc_feature = np.mean(
-        mfcc,
+        mfcc.T,
         axis=0
     )
 
-    # =====================================================
-    # LFCC FEATURE EXTRACTION
-    # =====================================================
-
-    # -----------------------------
-    # FFT / POWER SPECTRUM
-    # -----------------------------
+    # LFCC approximation
     stft = np.abs(
-        librosa.stft(
-            audio,
-            n_fft=512
-        )
+        librosa.stft(audio)
     )
 
-    power_spec = stft ** 2
-
-    # -----------------------------
-    # LINEAR FILTER BANK
-    # -----------------------------
-    num_filters = 40
-
-    num_bins = power_spec.shape[0]
-
-    linear_filters = np.zeros(
-        (num_filters, num_bins)
+    lfcc = librosa.feature.mfcc(
+        S=librosa.power_to_db(stft**2),
+        n_mfcc=13
     )
-
-    for i in range(num_filters):
-
-        start = int(i * num_bins / num_filters)
-        end = int((i + 1) * num_bins / num_filters)
-
-        linear_filters[i, start:end] = 1
-
-    lfcc_energy = np.dot(
-        linear_filters,
-        power_spec
-    )
-
-    # -----------------------------
-    # LOG ENERGY
-    # -----------------------------
-    log_lfcc = np.log(
-        lfcc_energy + 1e-8
-    )
-
-    # -----------------------------
-    # DCT → LFCC
-    # -----------------------------
-    lfcc = dct(
-        log_lfcc,
-        type=2,
-        axis=0,
-        norm='ortho'
-    )[:13]
 
     lfcc_feature = np.mean(
-        lfcc,
-        axis=1
+        lfcc.T,
+        axis=0
     )
 
-    # =====================================================
-    # HYBRID FEATURES
-    # =====================================================
-    hybrid_features = np.concatenate(
+    # Hybrid
+    hybrid = np.concatenate(
         (
             mfcc_feature,
             lfcc_feature
         )
     )
 
-    return hybrid_features.reshape(1, -1)
-
+    return hybrid.reshape(1, -1)
 # =========================================================
 # MODEL PREDICTION
 # =========================================================
