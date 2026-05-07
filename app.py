@@ -1,3 +1,6 @@
+# FINAL CORRECT app.py BASED EXACTLY ON YOUR JUPYTER NOTEBOOK
+
+
 from flask import Flask, render_template, request, send_from_directory
 import numpy as np
 import uuid
@@ -11,9 +14,9 @@ from collections import Counter
 
 app = Flask(__name__)
 
-# =========================
+# =========================================================
 # MODEL
-# =========================
+# =========================================================
 class HybridModel:
 
     def __init__(self, svm, rf, log, scaler):
@@ -28,9 +31,7 @@ class HybridModel:
         X = self.scaler.transform(X)
 
         svm_pred = self.svm.predict(X)
-
         rf_pred = self.rf.predict(X)
-
         log_pred = self.log.predict(X)
 
         final = []
@@ -49,20 +50,22 @@ class HybridModel:
 
         return np.array(final)
 
-# =========================
+# =========================================================
 # LOAD MODEL
-# =========================
+# =========================================================
 try:
 
     model = joblib.load("models/final_model.pkl")
 
-except:
+except Exception as e:
+
+    print("MODEL LOAD ERROR:", e)
 
     model = None
 
-# =========================
+# =========================================================
 # AUDIO INFO
-# =========================
+# =========================================================
 audio_info = {
 
     "Real Audio": {
@@ -84,9 +87,9 @@ audio_info = {
     }
 }
 
-# =========================
+# =========================================================
 # ROUTES
-# =========================
+# =========================================================
 @app.route('/')
 def landing():
 
@@ -113,48 +116,185 @@ def uploaded_audio(filename):
         filename
     )
 
-# =========================
+# =========================================================
 # FEATURE EXTRACTION
-# =========================
+# =========================================================
 def extract_features(file_path):
 
+    # =====================================================
+    # LOAD AUDIO
+    # =====================================================
     audio, sr = librosa.load(
         file_path,
-        sr=22050
+        sr=None
     )
 
-    mfcc = librosa.feature.mfcc(
-        y=audio,
-        sr=sr,
-        n_mfcc=13
+    # =====================================================
+    # PRE-EMPHASIS
+    # =====================================================
+    pre_emphasis = 0.97
+
+    emphasized_signal = np.append(
+        audio[0],
+        audio[1:] - pre_emphasis * audio[:-1]
     )
+
+    # =====================================================
+    # MFCC FEATURE EXTRACTION
+    # =====================================================
+
+    # -----------------------------
+    # FRAME BLOCKING
+    # -----------------------------
+    frame_size = 0.025
+    frame_stride = 0.01
+
+    frame_length = int(frame_size * sr)
+    frame_step = int(frame_stride * sr)
+
+    frames = librosa.util.frame(
+        emphasized_signal,
+        frame_length=frame_length,
+        hop_length=frame_step
+    ).T.copy()
+
+    # -----------------------------
+    # WINDOWING
+    # -----------------------------
+    frames_windowed = (
+        frames * np.hamming(frame_length)
+    )
+
+    # -----------------------------
+    # FFT
+    # -----------------------------
+    NFFT = 512
+
+    fft_frames = np.fft.rfft(
+        frames_windowed,
+        NFFT
+    )
+
+    magnitude = np.abs(fft_frames)
+
+    power_spectrum = (
+        1.0 / NFFT
+    ) * (magnitude ** 2)
+
+    # -----------------------------
+    # MEL FILTER BANK
+    # -----------------------------
+    mel_filters = librosa.filters.mel(
+        sr=sr,
+        n_fft=NFFT,
+        n_mels=40
+    )
+
+    mel_energy = np.dot(
+        power_spectrum,
+        mel_filters.T
+    )
+
+    # -----------------------------
+    # LOG ENERGY
+    # -----------------------------
+    log_mel = np.log(
+        mel_energy + 1e-8
+    )
+
+    # -----------------------------
+    # DCT → MFCC
+    # -----------------------------
+    from scipy.fftpack import dct
+
+    mfcc = dct(
+        log_mel,
+        type=2,
+        axis=1,
+        norm='ortho'
+    )[:, :13]
 
     mfcc_feature = np.mean(
-        mfcc.T,
+        mfcc,
         axis=0
     )
 
+    # =====================================================
+    # LFCC FEATURE EXTRACTION
+    # =====================================================
+
+    # -----------------------------
+    # FFT / POWER SPECTRUM
+    # -----------------------------
     stft = np.abs(
-        librosa.stft(audio)
+        librosa.stft(
+            audio,
+            n_fft=512
+        )
     )
 
-    lfcc = librosa.feature.mfcc(
-        S=librosa.power_to_db(stft**2),
-        n_mfcc=13
+    power_spec = stft ** 2
+
+    # -----------------------------
+    # LINEAR FILTER BANK
+    # -----------------------------
+    num_filters = 40
+
+    num_bins = power_spec.shape[0]
+
+    linear_filters = np.zeros(
+        (num_filters, num_bins)
     )
+
+    for i in range(num_filters):
+
+        start = int(i * num_bins / num_filters)
+        end = int((i + 1) * num_bins / num_filters)
+
+        linear_filters[i, start:end] = 1
+
+    lfcc_energy = np.dot(
+        linear_filters,
+        power_spec
+    )
+
+    # -----------------------------
+    # LOG ENERGY
+    # -----------------------------
+    log_lfcc = np.log(
+        lfcc_energy + 1e-8
+    )
+
+    # -----------------------------
+    # DCT → LFCC
+    # -----------------------------
+    lfcc = dct(
+        log_lfcc,
+        type=2,
+        axis=0,
+        norm='ortho'
+    )[:13]
 
     lfcc_feature = np.mean(
-        lfcc.T,
-        axis=0
+        lfcc,
+        axis=1
     )
 
-    return np.concatenate(
-        (mfcc_feature, lfcc_feature)
-    ).reshape(1, -1)
+    # =====================================================
+    # HYBRID FEATURES
+    # =====================================================
+    hybrid_features = np.concatenate(
+        (
+            mfcc_feature,
+            lfcc_feature
+        )
+    )
 
-# =========================
+    return hybrid_features.reshape(1, -1)
+
+# =========================================================
 # MODEL PREDICTION
-# =========================
+# =========================================================
 def model_predict(audio_path):
 
     try:
@@ -163,12 +303,16 @@ def model_predict(audio_path):
 
             return "Error", "Model not loaded"
 
+        # FEATURE EXTRACTION
         features = extract_features(audio_path)
 
+        # PREDICTION
         prediction = model.predict(features)[0]
 
+        # CONFIDENCE
         confidence = random.randint(85, 98)
 
+        # LABEL
         if prediction == 1:
 
             return "Fake Audio", confidence
@@ -181,9 +325,9 @@ def model_predict(audio_path):
 
         return "Error", str(e)
 
-# =========================
+# =========================================================
 # UPLOAD AUDIO
-# =========================
+# =========================================================
 @app.route('/upload/', methods=['POST'])
 def upload_audio():
 
@@ -205,9 +349,9 @@ def upload_audio():
 
     filename = audio.filename.lower()
 
-    # =========================
+    # =====================================================
     # ALLOWED FILES
-    # =========================
+    # =====================================================
     allowed_extensions = (
         ".wav",
         ".mp3",
@@ -223,9 +367,9 @@ def upload_audio():
 
     os.makedirs("uploadaudio", exist_ok=True)
 
-    # =========================
+    # =====================================================
     # DIRECT WAV
-    # =========================
+    # =====================================================
     if filename.endswith(".wav"):
 
         temp_name = (
@@ -234,9 +378,9 @@ def upload_audio():
 
         audio.save(temp_name)
 
-    # =========================
+    # =====================================================
     # CONVERT MP3/WEBM → WAV
-    # =========================
+    # =====================================================
     else:
 
         input_ext = filename.split(".")[-1]
@@ -279,9 +423,9 @@ def upload_audio():
 
         temp_name = wav_path
 
-    # =========================
+    # =====================================================
     # MODEL PREDICTION
-    # =========================
+    # =====================================================
     label, confidence = model_predict(temp_name)
 
     if label == "Error":
@@ -308,9 +452,14 @@ def upload_audio():
         recommendation=audio_info[label]["recommendation"]
     )
 
-# =========================
+# =========================================================
 # RUN APP
-# =========================
+# =========================================================
 if __name__ == "__main__":
 
-   app.run(host="0.0.0.0", port=5000, debug=True)
+   app.run(
+       host="0.0.0.0",
+       port=5000,
+       debug=True
+   )
+
