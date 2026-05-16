@@ -54,40 +54,35 @@ This project was built with a modern dark-themed interface and provides seamless
 
 Modern landing page with futuristic dark UI.
 
-<img src="Deepfake-Audio-Detection/main/static/images/homeD.png" width="100%"/>
-
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/homeD.png" width="100%"/>
 ---
 
 ## 📂 Upload Audio Detection
 
 Upload or drag & drop audio files for instant prediction.
 
-<img src="Deepfake-Audio-Detection/main/static/images/upload.png" width="100%"/>
-
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/upload.png" width="100%"/>
 ---
 
 ## 🟢 Real Audio Prediction Result
 
 Displays confidence score and detailed analysis.
 
-<img src="Deepfake-Audio-Detection/main/static/images/real.png" width="100%"/>
-
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/real.png" width="100%"/>
 ---
 
 ## 🔴 Fake Audio Prediction Result
 
 Detects AI-generated or manipulated audio.
 
-<img src="Deepfake-Audio-Detection/main/static/images/fake.png" width="100%"/>
-
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/fake.png" width="100%"/>
 ---
 
 ## 🎤 Browser Audio Recording
 
 Record audio directly from browser with playback support.
 
-<img src="Deepfake-Audio-Detection/main/static/images/record.png" width="100%"/>
-
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/record.png" width="100%"/>
 ---
 
 # 🎯 Main Features
