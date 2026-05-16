@@ -1,47 +1,92 @@
 <div align="center">
 
-# 🎧 Deepfake Audio Detection 🚀
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:020024,50:090979,100:00d4ff&height=250&section=header&text=Deepfake%20Audio%20Detection&fontSize=45&fontColor=ffffff&animation=fadeIn&fontAlignY=40"/>
 
+# 🎧 Deepfake Audio Detection
 
 ### 🧠 AI-Powered Audio Deepfake Detection System
 
-Detect whether an audio file is:
-
-## ✅ Real Audio  
-## ❌ AI Generated / Deepfake Audio
-
-🎤 Record Audio • 📂 Upload Audio • 📊 Get Predictions • 🔊 Listen to Audio
+<p align="center">
+  <img src="https://img.shields.io/badge/AI-Powered-00e5ff?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Machine%20Learning-Deepfake%20Detection-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Flask-Web%20Application-black?style=for-the-badge&logo=flask"/>
+  <img src="https://img.shields.io/badge/Python-3.10-yellow?style=for-the-badge&logo=python"/>
+</p>
 
 ---
 
-<img src="https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python"/>
-<img src="https://img.shields.io/badge/Flask-Web_App-black?style=for-the-badge&logo=flask"/>
-<img src="https://img.shields.io/badge/Machine_Learning-AI-red?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/FFmpeg-Audio_Processing-green?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Status-Working-success?style=for-the-badge"/>
+### 🚀 Detect Whether an Audio File is:
+
+# ✅ Real Human Voice  
+# ❌ AI Generated / Deepfake Audio
+
+🎤 Record Audio • 📂 Upload Audio • 📊 Confidence Prediction • 🔊 Audio Playback
 
 </div>
 
 ---
 
-# 📌 Project Overview
+# 🌟 Project Overview
 
-Deepfake Audio Detection is a Machine Learning-based web application that identifies whether uploaded or recorded audio is:
+Deepfake Audio Detection is an advanced AI-powered web application developed to identify whether an uploaded or recorded audio clip is:
 
-- 🟢 **Real Human Voice**
-- 🔴 **AI Generated / Deepfake Voice**
+- 🟢 **Authentic Human Voice**
+- 🔴 **Synthetic / AI Generated Voice**
 
-The system uses a **Hybrid Machine Learning Model** trained using audio feature extraction techniques.
+The system leverages:
 
-The project provides:
+✅ Machine Learning  
+✅ Audio Signal Processing  
+✅ MFCC & LFCC Feature Extraction  
+✅ Real-Time Prediction Techniques  
 
-✨ Modern User Interface  
-🎤 Browser Audio Recording  
-📂 Drag & Drop Upload  
-📊 Confidence Score Prediction  
-🔊 Audio Playback  
-⚡ Real-Time Processing  
-🎼 Automatic Audio Conversion
+to accurately classify audio authenticity.
+
+This project was built with a modern dark-themed interface and provides seamless browser-based recording and upload functionality.
+
+---
+
+# ✨ Live Interface Preview
+
+---
+
+## 🏠 Home Page
+
+Modern landing page with futuristic dark UI.
+
+<img src="Deepfake-Audio-Detection/main/static/images/homeD.png" width="100%"/>
+
+---
+
+## 📂 Upload Audio Detection
+
+Upload or drag & drop audio files for instant prediction.
+
+<img src="Deepfake-Audio-Detection/main/static/images/upload.png" width="100%"/>
+
+---
+
+## 🟢 Real Audio Prediction Result
+
+Displays confidence score and detailed analysis.
+
+<img src="Deepfake-Audio-Detection/main/static/images/real.png" width="100%"/>
+
+---
+
+## 🔴 Fake Audio Prediction Result
+
+Detects AI-generated or manipulated audio.
+
+<img src="Deepfake-Audio-Detection/main/static/images/fake.png" width="100%"/>
+
+---
+
+## 🎤 Browser Audio Recording
+
+Record audio directly from browser with playback support.
+
+<img src="Deepfake-Audio-Detection/main/static/images/record.png" width="100%"/>
 
 ---
 
@@ -49,80 +94,72 @@ The project provides:
 
 ---
 
-## 🎧 Deepfake Audio Detection
+## 🎧 Audio Deepfake Detection
 
-✅ Upload audio files  
-✅ Predict Real or Fake audio  
-✅ Confidence score display  
-✅ Audio analysis output  
-✅ Recommendation system  
-✅ Real-time detection  
+✅ Real vs Fake Audio Classification  
+✅ Confidence Score Prediction  
+✅ AI-generated Voice Detection  
+✅ Audio Playback Support  
+✅ Detection Analysis & Recommendations  
+✅ Fast Real-Time Processing  
 
 ---
 
 ## 🎤 Browser Audio Recording
 
-🎙 Record audio directly from browser  
-⏸ Pause / Resume recording  
-⏹ Stop recording  
-🔄 Record again option  
-📥 Download recorded audio  
-🔊 Playback recorded audio  
+🎙 Record Audio Directly  
+⏸ Pause / Resume Recording  
+⏹ Stop Recording  
+🔄 Record Again Option  
+📥 Download Recorded Audio  
+🔊 Built-in Audio Playback  
 
 ---
 
-## 📂 Upload System
+## 📂 Audio Upload System
 
 📁 Drag & Drop Upload  
 📤 File Upload Button  
-🎵 WAV / MP3 / WEBM support  
-🔄 Automatic audio conversion  
-⚡ Fast processing system  
+🎵 WAV / MP3 / WEBM Support  
+🔄 Automatic Audio Conversion  
+⚡ Instant Audio Processing  
 
 ---
 
-## 🎨 Modern UI
+## 🎨 Professional UI/UX
 
-🌑 Dark themed design  
-📱 Responsive layout  
-📋 Sidebar navigation  
-✨ Smooth animations  
-⚡ User-friendly interface  
+🌑 Futuristic Dark Theme  
+📱 Responsive Design  
+✨ Smooth Animations  
+📋 Sidebar Navigation  
+⚡ Interactive Interface  
 
 ---
 
-# 🛠 Technologies Used
+# 🛠 Tech Stack
 
 <div align="center">
 
-| Backend | Frontend | Audio Processing | ML |
-|---|---|---|---|
-| Flask | HTML | FFmpeg | Scikit-learn |
-| Python | CSS | Librosa | SVM |
-| Joblib | JavaScript | WAV Processing | Random Forest |
-| NumPy | Responsive UI | Feature Extraction | Logistic Regression |
+| Category | Technologies |
+|---|---|
+| Backend | Flask, Python |
+| Frontend | HTML, CSS, JavaScript |
+| Machine Learning | Scikit-learn |
+| Audio Processing | Librosa, FFmpeg |
+| Model Storage | Joblib |
+| Feature Extraction | MFCC, LFCC |
 
 </div>
 
 ---
 
-# 🧠 Machine Learning Model
+# 🧠 Machine Learning Architecture
+
+The system uses a **Hybrid Voting-Based Machine Learning Model** for improved prediction accuracy.
 
 ---
 
-## 📌 Model Used
-
-The trained model is included inside:
-
-```text
-models/final_model.pkl
-```
-
----
-
-## 🤖 Hybrid Model Architecture
-
-The prediction system combines:
+## 🤖 Models Used
 
 ### 🔹 Support Vector Machine (SVM)
 
@@ -130,30 +167,33 @@ The prediction system combines:
 
 ### 🔹 Logistic Regression
 
-using:
+These models are combined using:
 
 # 🗳 Majority Voting Technique
 
-for improved prediction accuracy and stability.
+to generate stable and reliable predictions.
 
 ---
 
 # 🎼 Audio Feature Extraction
 
-The system extracts:
+The application extracts powerful acoustic features from audio samples including:
 
-✅ MFCC Features  
-✅ LFCC Features  
+✅ MFCC (Mel Frequency Cepstral Coefficients)  
+✅ LFCC (Linear Frequency Cepstral Coefficients)  
 
-from audio files before prediction.
+These features help identify:
+
+- Speech patterns
+- Voice inconsistencies
+- Frequency anomalies
+- AI-generated artifacts
 
 ---
 
 # 🎵 Supported Audio Formats
 
-The application supports:
-
-| Format | Supported |
+| Format | Support |
 |---|---|
 | WAV | ✅ |
 | MP3 | ✅ |
@@ -163,71 +203,47 @@ The application supports:
 
 # 🔄 Automatic Audio Conversion
 
-The ML model works with:
+The prediction model processes:
 
 ```text
 .wav
 ```
 
-audio format.
+format internally.
 
-So uploaded:
-
-- `.mp3`
-- `.webm`
-
-files are automatically converted into:
+Uploaded audio formats such as:
 
 ```text
-.wav
-```
-
-before prediction.
-
-This conversion uses:
-
-# 🎬 FFmpeg
-
----
-
-# 🎤 Audio Recording Workflow
-
-Browser recording generates:
-
-```text
+.mp3
 .webm
 ```
 
-audio files.
-
-The application automatically converts:
+are automatically converted into:
 
 ```text
-.webm → .wav
+.wav
 ```
 
-before sending audio to the prediction model.
+using:
+
+# 🎬 FFmpeg
+
+for accurate prediction.
 
 ---
 
-# 🎬 FFmpeg Installation Guide (Windows)
+# ⚙️ FFmpeg Installation (Windows)
 
 FFmpeg is required for:
 
-✅ MP3 support  
-✅ WEBM support  
-✅ Browser recording conversion  
-✅ Audio preprocessing  
-
-without FFmpeg:
-
-❌ MP3 and WEBM files cannot be processed.
+✅ MP3 Support  
+✅ WEBM Conversion  
+✅ Browser Recording Processing  
+✅ Audio Preprocessing  
 
 ---
 
-## 📥 Step 1 — Download FFmpeg
-
-Download from:
+## 📥 Download FFmpeg
 
 🔗 https://www.gyan.dev/ffmpeg/builds/
 
@@ -239,9 +255,9 @@ ffmpeg-release-essentials.zip
 
 ---
 
-## 📦 Step 2 — Extract ZIP
+## 📦 Extract ZIP
 
-Extract to:
+Extract into:
 
 ```text
 C:\ffmpeg
@@ -249,47 +265,23 @@ C:\ffmpeg
 
 ---
 
-## 📁 Step 3 — Verify Folder
+## 🌍 Add to Environment Variables
 
-Ensure:
-
-```text
-C:\ffmpeg\bin
-```
-
-contains:
-
-```text
-ffmpeg.exe
-```
-
----
-
-## 🌍 Step 4 — Add FFmpeg to Environment Variables
-
-Open:
-
-```text
-Edit the system environment variables
-```
-
-Then:
-
-```text
-Environment Variables → Path → Edit → New
-```
-
-Add:
+Add this path:
 
 ```text
 C:\ffmpeg\bin
 ```
 
-Save all changes.
+inside:
+
+```text
+Environment Variables → Path
+```
 
 ---
 
-## ✅ Step 5 — Verify Installation
+## ✅ Verify Installation
 
 Run:
 
@@ -297,13 +289,11 @@ Run:
 ffmpeg -version
 ```
 
-If installed correctly:
-
-✅ FFmpeg version details will appear.
+If installed correctly, version details will appear.
 
 ---
 
-# ⚡ Quick Start
+# 🚀 Quick Start
 
 ---
 
@@ -331,9 +321,7 @@ pip install -r requirements.txt
 
 ---
 
-# ▶️ Run Application
-
-Start Flask server:
+## ▶️ Run Application
 
 ```bash
 python app.py
@@ -341,45 +329,11 @@ python app.py
 
 ---
 
-Open browser:
+## 🌐 Open Browser
 
 ```text
 http://127.0.0.1:5000
 ```
-
----
-
-# 📷 Application Workflow
-
----
-
-## 🏠 Home Page
-
-✨ Upload audio  
-✨ Drag & drop support  
-✨ Sidebar navigation  
-✨ Audio playback  
-
----
-
-## 🎤 Record Page
-
-🎙 Record voice  
-⏸ Pause / Resume  
-⏹ Stop recording  
-📥 Download audio  
-
----
-
-## 📊 Prediction Result
-
-Displays:
-
-🟢 Real Audio  
-🔴 Fake Audio  
-📈 Confidence Score  
-🔊 Audio Playback  
-📄 Analysis & Recommendation  
 
 ---
 
@@ -398,8 +352,8 @@ Deepfake-Audio-Detection/
 │   └── recordings/
 │
 ├── templates/
-│   ├── index.html
 │   ├── home.html
+│   ├── index.html
 │   ├── record.html
 │   └── result.html
 │
@@ -414,7 +368,7 @@ Deepfake-Audio-Detection/
 
 # 📦 Requirements
 
-Main Python packages:
+Main dependencies used:
 
 ```text
 flask
@@ -424,9 +378,10 @@ scikit-learn
 joblib
 soundfile
 scipy
+ffmpeg
 ```
 
-Install all using:
+Install all dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -434,24 +389,15 @@ pip install -r requirements.txt
 
 ---
 
-# 💡 Notes
+# 🚀 Future Enhancements
 
-⚠️ Best performance with clean audio files  
-⚠️ FFmpeg required for MP3/WEBM support  
-⚠️ Browser microphone permission required  
-⚠️ Prediction accuracy may vary on unseen datasets  
-
----
-
-# 🚀 Future Improvements
-
-✅ Improve model accuracy  
-🧠 Integrate Deep Learning (CNN / LSTM)  
-🌍 Deploy as live web application  
-📱 Mobile app integration  
-☁ Cloud storage support  
-🔐 User authentication system  
-🎵 More audio format support  
+✅ Improve prediction accuracy  
+🧠 Integrate CNN/LSTM Deep Learning Models  
+☁ Deploy to Cloud Platform  
+📱 Mobile Application Support  
+🔐 User Authentication System  
+🎵 Additional Audio Format Support  
+🌍 Multi-language Audio Detection  
 
 ---
 
@@ -461,8 +407,19 @@ pip install -r requirements.txt
 
 # Akshay R 🚀
 
-🔗 GitHub:  
-https://github.com/Akshay001-A
+<p align="center">
+  <a href="https://github.com/Akshay001-A">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github"/>
+  </a>
+
+  <a href="https://www.linkedin.com/in/akshayofficial0207">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin"/>
+  </a>
+
+  <a href="https://www.instagram.com/akshay_authentic">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram"/>
+  </a>
+</p>
 
 </div>
 
@@ -472,14 +429,12 @@ https://github.com/Akshay001-A
 
 This project is licensed under the **MIT License**.
 
-See the `LICENSE` file for more details.
-
 ---
 
 <div align="center">
 
-# ⭐ If you like this project, give it a star ⭐
+# ⭐ If You Like This Project, Give It a Star ⭐
 
-<img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" width="200"/>
+<img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" width="220"/>
 
 </div>
