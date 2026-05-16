@@ -426,10 +426,14 @@ This project is licensed under the **MIT License**.
 
 ---
 
+---
+
 <div align="center">
 
-# ⭐ If You Like This Project, Give It a Star ⭐
+# ⭐ Thanks for Visiting This Project ⭐
 
-<img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" width="220"/>
+### 🚀 If you found this project useful, don't forget to star the repository.
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Poppins&size=24&duration=3000&color=00F7FF&center=true&vCenter=true&width=700&lines=AI-Powered+Deepfake+Audio+Detection;Built+With+Python+%26+Machine+Learning;Made+by+Akshay+R"/>
 
 </div>
