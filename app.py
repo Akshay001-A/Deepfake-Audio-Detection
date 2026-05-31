@@ -1,4 +1,4 @@
-# FINAL CORRECT app.py BASED EXACTLY ON YOUR JUPYTER NOTEBOOK
+
 
 
 from flask import Flask, render_template, request, send_from_directory
@@ -53,14 +53,15 @@ class HybridModel:
 # =========================================================
 # LOAD MODEL
 # =========================================================
-try:
+import traceback
 
+try:
     model = joblib.load("models/final_model.pkl")
+    print("✅ Model loaded successfully")
 
 except Exception as e:
-
-    print("MODEL LOAD ERROR:", e)
-
+    print("❌ MODEL LOAD ERROR")
+    traceback.print_exc()
     model = None
 
 # =========================================================
