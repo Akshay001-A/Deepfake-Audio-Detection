@@ -117,47 +117,21 @@ def uploaded_audio(filename):
     )
 
 def extract_features(file_path):
+    """Hybrid feature extraction (MFCC + LFCC) matching notebook implementation."""
+    # Load audio at its native sampling rate
+    audio, sr = librosa.load(file_path, sr=None)
 
-    audio, sr = librosa.load(
-        file_path,
-        sr=16000
-    )
+    # MFCC features (13 coefficients)
+    mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
+    mfcc_feature = np.mean(mfcc.T, axis=0)
 
-    # MFCC
-    mfcc = librosa.feature.mfcc(
-        y=audio,
-        sr=sr,
-        n_mfcc=13
-    )
+    # LFCC approximation via MFCC of log-power spectrogram
+    stft = np.abs(librosa.stft(audio))
+    lfcc = librosa.feature.mfcc(S=librosa.power_to_db(stft**2), n_mfcc=13)
+    lfcc_feature = np.mean(lfcc.T, axis=0)
 
-    mfcc_feature = np.mean(
-        mfcc.T,
-        axis=0
-    )
-
-    # LFCC approximation
-    stft = np.abs(
-        librosa.stft(audio)
-    )
-
-    lfcc = librosa.feature.mfcc(
-        S=librosa.power_to_db(stft**2),
-        n_mfcc=13
-    )
-
-    lfcc_feature = np.mean(
-        lfcc.T,
-        axis=0
-    )
-
-    # Hybrid
-    hybrid = np.concatenate(
-        (
-            mfcc_feature,
-            lfcc_feature
-        )
-    )
-
+    # Concatenate MFCC and LFCC into a single hybrid vector (26 dims)
+    hybrid = np.concatenate((mfcc_feature, lfcc_feature))
     return hybrid.reshape(1, -1)
 # =========================================================
 # MODEL PREDICTION
@@ -173,32 +147,40 @@ def model_predict(audio_path):
         # FEATURE EXTRACTION
         features = extract_features(audio_path)
 
-        # PREDICTION
-        prediction = model.predict(features)[0]
-
-        # CONFIDENCE (Calculated using real model probabilities)
+        # Scale features once
         X_scaled = model.scaler.transform(features)
-        
-        # Sigmoid scaling on SVM decision boundary distance
+
+        # Individual classifier predictions
+        svm_pred = model.svm.predict(X_scaled)
+        rf_pred = model.rf.predict(X_scaled)
+        log_pred = model.log.predict(X_scaled)
+
+        # Majority‑vote prediction
+        pred = Counter([svm_pred[0], rf_pred[0], log_pred[0]]).most_common(1)[0][0]
+
+        # Compute probabilities for confidence (same as before)
+        # SVM probability via sigmoid of decision function
         d_svm = model.svm.decision_function(X_scaled)[0]
-        p_svm_class1 = 1 / (1 + np.exp(-d_svm))
-        p_svm = p_svm_class1 if prediction == 1 else (1 - p_svm_class1)
+        p_svm = 1 / (1 + np.exp(-d_svm))
 
-        # Standard class probabilities for RF and Logistic Regression
-        p_rf = model.rf.predict_proba(X_scaled)[0][prediction]
-        p_log = model.log.predict_proba(X_scaled)[0][prediction]
+        # Random Forest probability for class 1
+        idx1 = list(model.rf.classes_).index(1)
+        p_rf = model.rf.predict_proba(X_scaled)[0][idx1]
 
-        # Average ensemble confidence score
-        confidence = int(round(((p_svm + p_rf + p_log) / 3.0) * 100))
+        # Logistic Regression probability for class 1
+        idx1_log = list(model.log.classes_).index(1)
+        p_log = model.log.predict_proba(X_scaled)[0][idx1_log]
+
+        # Average probability for confidence (optional, can be tuned)
+        avg_prob = (p_svm + p_rf + p_log) / 3.0
+        print('DEBUG: avg_prob =', avg_prob)
+        confidence = int(round((avg_prob if pred == 1 else 1 - avg_prob) * 100))
         confidence = max(50, min(100, confidence))
 
-        # LABEL
-        if prediction == 1:
-
+        # Determine label based on majority‑vote prediction
+        if pred == 1:
             return "Fake Audio", confidence
-
         else:
-
             return "Real Audio", confidence
 
     except Exception as e:
