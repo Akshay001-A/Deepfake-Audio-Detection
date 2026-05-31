@@ -166,10 +166,9 @@ function validateFile(file) {
     !file.name.toLowerCase().endsWith(".mp3")
     &&
     !file.name.toLowerCase().endsWith(".webm")
-       )
-     {
+       ) {
 
-        fileText.innerHTML = "❌ Please upload only .wav file";
+        fileText.innerHTML = "❌ Please upload only .wav, .mp3, or .webm files";
 
         fileText.style.color = "#ff4d4d";
 

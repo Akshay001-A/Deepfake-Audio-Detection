@@ -120,7 +120,7 @@ def extract_features(file_path):
 
     audio, sr = librosa.load(
         file_path,
-        sr=None
+        sr=16000
     )
 
     # MFCC
@@ -176,8 +176,21 @@ def model_predict(audio_path):
         # PREDICTION
         prediction = model.predict(features)[0]
 
-        # CONFIDENCE
-        confidence = random.randint(85, 98)
+        # CONFIDENCE (Calculated using real model probabilities)
+        X_scaled = model.scaler.transform(features)
+        
+        # Sigmoid scaling on SVM decision boundary distance
+        d_svm = model.svm.decision_function(X_scaled)[0]
+        p_svm_class1 = 1 / (1 + np.exp(-d_svm))
+        p_svm = p_svm_class1 if prediction == 1 else (1 - p_svm_class1)
+
+        # Standard class probabilities for RF and Logistic Regression
+        p_rf = model.rf.predict_proba(X_scaled)[0][prediction]
+        p_log = model.log.predict_proba(X_scaled)[0][prediction]
+
+        # Average ensemble confidence score
+        confidence = int(round(((p_svm + p_rf + p_log) / 3.0) * 100))
+        confidence = max(50, min(100, confidence))
 
         # LABEL
         if prediction == 1:
