@@ -41,6 +41,13 @@ to accurately classify audio authenticity.
 
 This project was built with a modern dark-themed interface and provides seamless browser-based recording and upload functionality.
 
+**Why choose this solution?**
+- State‑of‑the‑art audio forensics.
+- Fast inference on CPU.
+- Easy deployment via Docker.
+- Open‑source and extensible.
+
+
 ---
 
 # ✨ Live Interface Preview
@@ -457,8 +464,6 @@ Contributions are welcome! Please fork the repository, create a feature branch, 
 # 📄 License
 
 This project is licensed under the **MIT License**.
-
----
 
 ---
 
