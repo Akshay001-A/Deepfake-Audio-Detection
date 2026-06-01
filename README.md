@@ -4,25 +4,22 @@
 
 # 🎧 Deepfake Audio Detection
 
-### 🧠 AI-Powered Audio Deepfake Detection System
+[![AI Powered](https://img.shields.io/badge/AI%20Powered-00e5ff?style=for-the-badge)](https://github.com/Akshay001-A/Deepfake-Audio-Detection)
+[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Deepfake%20Detection-blue?style=for-the-badge)](https://github.com/Akshay001-A/Deepfake-Audio-Detection)
+[![Flask](https://img.shields.io/badge/Flask-Web%20App-black?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/)
+[![Python](https://img.shields.io/badge/Python-3.10-yellow?style=for-the-badge&logo=python)](https://www.python.org/)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/AI-Powered-00e5ff?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Machine%20Learning-Deepfake%20Detection-blue?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Flask-Web%20Application-black?style=for-the-badge&logo=flask"/>
-  <img src="https://img.shields.io/badge/Python-3.10-yellow?style=for-the-badge&logo=python"/>
-</p>
+--- 
 
----
-
-### 🚀 Detect Whether an Audio File is:
-
-# ✅ Real Human Voice  
-# ❌ AI Generated / Deepfake Audio
-
-🎤 Record Audio • 📂 Upload Audio • 📊 Confidence Prediction • 🔊 Audio Playback
-
-</div>
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ---
 
@@ -91,33 +88,32 @@ Record audio directly from browser with playback support.
 
 ## 🎧 Audio Deepfake Detection
 
-✅ Real vs Fake Audio Classification  
-✅ Confidence Score Prediction  
-✅ AI-generated Voice Detection  
-✅ Audio Playback Support  
-✅ Detection Analysis & Recommendations  
-✅ Fast Real-Time Processing  
+**Key Features**
+- **Real vs. Fake Classification** – Accurate distinction between authentic human voice and AI‑generated audio.
+- **Confidence Scoring** – Provides a probability score for each prediction.
+- **AI‑Generated Voice Detection** – Specialized models to spot synthetic speech artifacts.
+- **In‑Browser Playback** – Seamless audio playback after upload or recording.
+- **Detailed Analysis** – Offers actionable insights and recommendations.
+- **Real‑Time Processing** – Near‑instant predictions for an interactive experience.
 
 ---
 
 ## 🎤 Browser Audio Recording
 
-🎙 Record Audio Directly  
-⏸ Pause / Resume Recording  
-⏹ Stop Recording  
-🔄 Record Again Option  
-📥 Download Recorded Audio  
-🔊 Built-in Audio Playback  
+- **Record Directly** – Capture audio via the browser with a single click.
+- **Pause / Resume** – Flexible control during the recording session.
+- **Stop & Re‑record** – Easily discard and start over.
+- **Download** – Save the captured WAV file locally.
+- **Playback** – Immediate playback of the recorded clip.
 
 ---
 
 ## 📂 Audio Upload System
 
-📁 Drag & Drop Upload  
-📤 File Upload Button  
-🎵 WAV / MP3 / WEBM Support  
-🔄 Automatic Audio Conversion  
-⚡ Instant Audio Processing  
+- **Drag & Drop** – Intuitive drop zone for rapid file uploads.
+- **File Upload Button** – Classic browse‑and‑select option.
+- **Supported Formats** – WAV, MP3, WEBM (auto‑converted to WAV via FFmpeg).
+- **Instant Processing** – Real‑time prediction once the audio is uploaded.
 
 ---
 
@@ -324,6 +320,32 @@ python app.py
 
 ---
 
+## 🚢 Docker Deployment
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/akshayauthentic/deepfake-audio-detect?style=for-the-badge)](https://hub.docker.com/r/akshayauthentic/deepfake-audio-detect)
+
+Pull the pre‑built image from Docker Hub:
+
+```bash
+docker pull akshayauthentic/deepfake-audio-detect:latest
+```
+
+Run the container (exposes Flask on port 5000):
+
+```bash
+docker run -p 5000:5000 akshayauthentic/deepfake-audio-detect:latest
+```
+
+The application will be available at `http://localhost:5000`.
+
+---
+
+```bash
+python app.py
+```
+
+---
+
 ## 🌐 Open Browser
 
 ```text
@@ -393,6 +415,18 @@ pip install -r requirements.txt
 🔐 User Authentication System  
 🎵 Additional Audio Format Support  
 🌍 Multi-language Audio Detection  
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request. Ensure your code follows the existing style, includes documentation updates, and passes all tests.
+
+## 📞 Contact
+
+- GitHub: [Akshay001-A](https://github.com/Akshay001-A)
+- LinkedIn: [Akshay Official](https://www.linkedin.com/in/akshayofficial0207)
+- Instagram: [akshay_authentic](https://www.instagram.com/akshay_authentic)
 
 ---
 
