@@ -4,57 +4,142 @@
 
 # 🎧 Deepfake Audio Detection
 
-[![AI Powered](https://img.shields.io/badge/AI%20Powered-00e5ff?style=for-the-badge)](https://github.com/Akshay001-A/Deepfake-Audio-Detection)
-[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Deepfake%20Detection-blue?style=for-the-badge)](https://github.com/Akshay001-A/Deepfake-Audio-Detection)
-[![Flask](https://img.shields.io/badge/Flask-Web%20App-black?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/)
-[![Python](https://img.shields.io/badge/Python-3.10-yellow?style=for-the-badge&logo=python)](https://www.python.org/)
+<p align="center">
+
+<a href="https://github.com/Akshay001-A/Deepfake-Audio-Detection">
+<img src="https://img.shields.io/badge/AI-Powered-00E5FF?style=for-the-badge"/>
+</a>
+
+<a href="https://github.com/Akshay001-A/Deepfake-Audio-Detection">
+<img src="https://img.shields.io/badge/Audio%20Forensics-Deepfake%20Detection-1565C0?style=for-the-badge"/>
+</a>
+
+<a href="https://github.com/Akshay001-A/Deepfake-Audio-Detection">
+<img src="https://img.shields.io/badge/Machine%20Learning-Ensemble%20Models-F57C00?style=for-the-badge"/>
+</a>
+
+<a href="https://flask.palletsprojects.com/">
+<img src="https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white"/>
+</a>
+
+<a href="https://www.python.org/">
+<img src="https://img.shields.io/badge/Python-3.10+-FFD43B?style=for-the-badge&logo=python&logoColor=black"/>
+</a>
+
+<a href="https://librosa.org/">
+<img src="https://img.shields.io/badge/Librosa-Audio%20Analysis-7B1FA2?style=for-the-badge"/>
+</a>
+
+<a href="https://ffmpeg.org/">
+<img src="https://img.shields.io/badge/FFmpeg-Audio%20Processing-007808?style=for-the-badge&logo=ffmpeg&logoColor=white"/>
+</a>
+
+<a href="https://scikit-learn.org/">
+<img src="https://img.shields.io/badge/Scikit--Learn-ML%20Models-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white"/>
+</a>
+
+<a href="https://github.com/Akshay001-A/Deepfake-Audio-Detection">
+<img src="https://img.shields.io/badge/Real--Time-Prediction-2E7D32?style=for-the-badge"/>
+</a>
+
+</p>
 
 </div>
 
 ---
 
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Why Choose This Solution?](#why-choose-this-solution)
-- [Live Interface Preview](#live-interface-preview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Machine Learning Architecture](#machine-learning-architecture)
-- [Supported Audio Formats & Conversion](#supported-audio-formats--conversion)
-- [FFmpeg Installation (Windows)](#ffmpeg-installation-windows)
-- [Quick Start](#quick-start)
-- [Docker Deployment](#docker-deployment)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Author](#author)
-- [Thanks](#thanks)
+# 📑 Table of Contents
+
+## 🌟 Getting Started
+- [📖 Project Overview](#project-overview)
+- [🎯 Why Choose This Solution?](#why-choose-this-solution)
+- [🖼️ Live Interface Preview](#live-interface-preview)
+
+## 🚀 Core Features
+- [✨ Features](#features)
+- [🛠️ Technology Stack](#tech-stack)
+- [🧠 Machine Learning Architecture](#machine-learning-architecture)
+- [🎵 Supported Audio Formats & Conversion](#supported-audio-formats--conversion)
+
+## ⚙️ Setup & Deployment
+- [🎬 FFmpeg Installation (Windows)](#ffmpeg-installation-windows)
+- [🚀 Quick Start](#quick-start)
+- [🐳 Docker Deployment](#docker-deployment)
+
+## 📂 Project Documentation
+- [🏗️ Project Structure](#project-structure)
+- [📦 Requirements](#requirements)
+- [🛣️ Future Enhancements](#future-enhancements)
+
+## 🤝 Community & Support
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
+- [📬 Contact](#contact)
+- [👨‍💻 Author](#author)
+
+## ⭐ Additional Information
+- [🙏 Thanks](#thanks)
 
 ---
+## 🌟 Project Overview
 
-## Project Overview
-Deepfake Audio Detection is an advanced AI‑powered web application designed to determine whether an uploaded or recorded audio clip is:
+Deepfake Audio Detection is an advanced AI-powered audio forensics platform designed to identify and classify synthetic, manipulated, and AI-generated speech with high accuracy.
+
+The system utilizes cutting-edge Machine Learning techniques, Digital Signal Processing (DSP), and acoustic feature extraction methods to analyze audio recordings and determine whether they originate from a genuine human speaker or an artificial voice generation system.
+
+### 🎯 Detection Categories
+
 - 🟢 **Authentic Human Voice**
-- 🔴 **Synthetic / AI Generated Voice**
+- 🔴 **AI-Generated / Deepfake Audio**
 
-The system leverages:
-- ✅ Machine Learning
+### 🧠 Powered By
+
+- ✅ Machine Learning & Ensemble Models
 - ✅ Audio Signal Processing
-- ✅ MFCC & LFCC Feature Extraction
-- ✅ Real‑Time Prediction Techniques
+- ✅ MFCC & LFCC Feature Engineering
+- ✅ Real-Time Audio Analysis
+- ✅ Browser-Based Audio Recording
+- ✅ Confidence-Based Predictions
 
-It features a modern dark‑themed UI with seamless browser‑based recording and upload capabilities.
+### 🚀 Key Highlights
+
+- 🎤 Record audio directly from the browser
+- 📂 Upload and analyze audio files instantly
+- 🔍 Detect synthetic voice artifacts and anomalies
+- 📊 Generate confidence scores for predictions
+- ⚡ Fast and reliable inference pipeline
+- 🎨 Modern responsive dark-themed user interface
+
+The platform provides an intuitive and user-friendly experience, making advanced audio authenticity verification accessible for researchers, developers, students, and cybersecurity professionals.
 
 ---
 
-## Why Choose This Solution?
-- State‑of‑the‑art audio forensics
-- Fast inference on CPU
-- Simple Docker deployment
-- Open‑source and extensible
+## 🚀 Why Choose This Solution?
+
+As AI voice synthesis technologies continue to evolve, verifying audio authenticity has become increasingly important across cybersecurity, media verification, digital forensics, and content validation domains.
+
+### ⭐ Key Advantages
+
+- 🔍 Advanced Audio Forensics
+- 🤖 Ensemble Machine Learning Architecture
+- ⚡ Real-Time Prediction & Analysis
+- 🎵 Multi-Format Audio Support
+- 🎤 Built-In Browser Audio Recording
+- 📈 Confidence-Based Classification
+- 🐳 Docker Deployment Support
+- 🔓 Open-Source & Extensible Design
+
+### 🎯 Ideal Use Cases
+
+- 🎧 Audio Deepfake Detection
+- 🛡️ Cybersecurity Research
+- 📰 Digital Media Verification
+- 🎙️ Voice Authentication Systems
+- 🧠 Artificial Intelligence Research
+- 🎓 Academic & Educational Projects
+- 🔬 Audio Forensics Investigation
+
+Deepfake Audio Detection demonstrates the practical application of Artificial Intelligence, Machine Learning, and Digital Signal Processing in combating the growing threat of AI-generated audio manipulation.
 
 ---
 
@@ -88,16 +173,33 @@ It features a modern dark‑themed UI with seamless browser‑based recording an
 
 ---
 
-## Tech Stack
+## 🛠️ Technology Stack
+
 <div align="center">
-| Category | Technologies |
-|---|---|
-| Backend | Flask, Python |
-| Frontend | HTML, CSS, JavaScript |
-| Machine Learning | Scikit‑learn |
-| Audio Processing | Librosa, FFmpeg |
-| Model Storage | Joblib |
-| Feature Extraction | MFCC, LFCC |
+
+### Backend & API
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+
+### Frontend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Machine Learning
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+
+### Audio Processing
+![Librosa](https://img.shields.io/badge/Librosa-Audio%20Analysis-blueviolet?style=for-the-badge)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)
+
+### Model Storage
+![Joblib](https://img.shields.io/badge/Joblib-Model%20Serialization-success?style=for-the-badge)
+
+### Feature Engineering
+![MFCC](https://img.shields.io/badge/MFCC-Feature%20Extraction-blue?style=for-the-badge)
+![LFCC](https://img.shields.io/badge/LFCC-Audio%20Features-purple?style=for-the-badge)
+
 </div>
 
 ---
@@ -217,15 +319,41 @@ Contributions are welcome! Fork the repo, create a feature branch, and submit a 
 
 ---
 
-## License
-This project is licensed under the **MIT License**.
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Contact
-- GitHub: [Akshay001-A](https://github.com/Akshay001-A)
-- LinkedIn: [Akshay Official](https://www.linkedin.com/in/akshayofficial0207)
-- Instagram: [akshay_authentic](https://www.instagram.com/akshay_authentic)
+## 📬 Connect With Me
+
+<div align="center">
+
+<a href="https://github.com/Akshay001-A">
+  <img src="https://img.shields.io/badge/GitHub-Akshay001--A-181717?style=for-the-badge&logo=github"/>
+</a>
+
+<a href="https://www.linkedin.com/in/akshayofficial0207">
+  <img src="https://img.shields.io/badge/LinkedIn-Akshay%20R-0077B5?style=for-the-badge&logo=linkedin"/>
+</a>
+
+<a href="https://www.instagram.com/akshay_authentic">
+  <img src="https://img.shields.io/badge/Instagram-@akshay__authentic-E4405F?style=for-the-badge&logo=instagram"/>
+</a>
+
+</div>
+
+### 🤝 Let's Connect
+
+Feel free to connect with me for:
+
+- 🤖 Artificial Intelligence & Machine Learning
+- 🎧 Audio Forensics & Deepfake Detection
+- 💻 Full Stack Development
+- 🚀 Open Source Collaboration
+- 🎓 Academic & Research Projects
+
+
 
 ---
 
