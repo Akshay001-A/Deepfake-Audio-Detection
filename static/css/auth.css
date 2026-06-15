@@ -1,0 +1,211 @@
+/* ========================= */
+/* AUTH PAGE */
+/* ========================= */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+
+    width: 600px;
+    max-width: 95%;
+
+    padding: 60px;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    backdrop-filter: blur(25px);
+
+    text-align: center;
+
+    box-shadow: 0 0 40px rgba(0, 255, 150, 0.12);
+}
+
+/* ========================= */
+/* TITLE */
+/* ========================= */
+
+.main-title {
+
+    font-size: 52px;
+
+    font-weight: 700;
+
+    margin-bottom: 30px;
+
+    background: linear-gradient(90deg,
+            #00ffa2,
+            #00c3ff);
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+}
+
+/* ========================= */
+/* FORM */
+/* ========================= */
+
+.auth-card form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.auth-card input {
+
+    width: 100%;
+
+    padding: 18px;
+
+    font-size: 16px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255, 255, 255, .15);
+
+    background: rgba(255, 255, 255, .08);
+
+    color: white;
+
+    outline: none;
+
+    transition: .3s;
+}
+
+.auth-card input:focus {
+
+    border-color: #00ffa2;
+
+    box-shadow: 0 0 15px rgba(0, 255, 150, .25);
+}
+
+.auth-card input::placeholder {
+
+    color: rgba(255, 255, 255, .55);
+}
+
+/* ========================= */
+/* BUTTON */
+/* ========================= */
+
+.auth-card .cta-btn {
+
+    width: 100%;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 35px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background: linear-gradient(90deg,
+            #00ffa2,
+            #00c3ff);
+
+    color: black;
+
+    transition: .3s;
+}
+
+.auth-card .cta-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 0 25px rgba(0, 255, 150, .4);
+}
+
+/* ========================= */
+/* LINKS */
+/* ========================= */
+
+.auth-link {
+
+    margin-top: 25px;
+
+    font-size: 16px;
+}
+
+.auth-link a {
+
+    color: #00ffa2;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.auth-link a:hover {
+
+    text-decoration: underline;
+}
+
+/* ========================= */
+/* FLASH MESSAGE */
+/* ========================= */
+
+.flash-message {
+
+    margin-bottom: 20px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: rgba(0, 255, 162, .12);
+
+    border: 1px solid rgba(0, 255, 162, .4);
+
+    color: #00ffa2;
+
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media(max-width:768px) {
+
+    .auth-card {
+
+        width: 95%;
+
+        padding: 35px;
+    }
+
+    .main-title {
+
+        font-size: 36px;
+    }
+
+    .auth-card input {
+
+        padding: 15px;
+    }
+
+    .auth-card .cta-btn {
+
+        padding: 15px;
+    }
+}

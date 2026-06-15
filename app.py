@@ -1,7 +1,16 @@
 
 
 
-from flask import Flask, render_template, request, send_from_directory
+from flask import (
+    Flask,
+    render_template,
+    request,
+    send_from_directory,
+    redirect,
+    session,
+    url_for,
+    flash
+)
 import numpy as np
 import uuid
 import os
@@ -11,9 +20,13 @@ import random
 import subprocess
 
 from collections import Counter
+from flask_bcrypt import Bcrypt
+from config import users_collection
+from bson import ObjectId
 
 app = Flask(__name__)
-
+app.secret_key = "supersecretkey123"
+bcrypt = Bcrypt(app)
 # =========================================================
 # MODEL
 # =========================================================
@@ -91,24 +104,174 @@ audio_info = {
 # =========================================================
 # ROUTES
 # =========================================================
+
+# REGISTER PAGE
 @app.route('/')
+def register_page():
+
+    return render_template('register.html')
+
+
+# LOGIN PAGE
+@app.route('/login')
+def login_page():
+
+    return render_template('login.html')    
+
+
+@app.route('/register', methods=['POST'])
+def register():
+
+    name = request.form.get('name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if not (name and email and password and confirm_password):
+        flash('All fields are required.', 'error')
+        return render_template('register.html')
+
+    if password != confirm_password:
+        flash('Passwords do not match.', 'error')
+        return render_template('register.html')
+
+    if users_collection.find_one({'email': email}):
+        flash('Email already registered.', 'error')
+        return render_template('register.html')
+
+    hashed_password = bcrypt.generate_password_hash(
+        password
+    ).decode('utf-8')
+
+    users_collection.insert_one({
+        'name': name,
+        'email': email,
+        'password': hashed_password
+    })
+
+    flash('Registration successful! Please login.', 'success')
+
+    return redirect(url_for('login_page'))
+
+
+
+
+@app.route('/login_user', methods=['POST'])
+def login_user():
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = users_collection.find_one({
+        'email': email
+    })
+
+    if not user:
+        flash('No account found with this email.', 'error')
+        return render_template('login.html')
+
+    if bcrypt.check_password_hash(
+        user['password'],
+        password
+    ):
+
+        session['user_id'] = str(user['_id'])
+        session['user_name'] = user['name']
+
+        return redirect('/landing')
+
+    flash('Incorrect password.', 'error')
+
+    return render_template('login.html')
+    
+
+
+# LANDING PAGE (AFTER LOGIN)
+@app.route('/landing')
 def landing():
 
-    return render_template('landing.html')
+    if 'user_id' not in session:
+
+        return redirect('/login')
+
+    return render_template(
+        'landing.html',
+        username=session.get('user_name')
+    )
 
 
+# HOME PAGE
 @app.route('/home')
 def home():
+
+    if 'user_id' not in session:
+
+        return redirect('/login')
 
     return render_template('home.html')
 
 
+# RECORD PAGE
 @app.route('/record')
 def record():
 
+    if 'user_id' not in session:
+
+        return redirect('/login')
+
     return render_template('record.html')
 
+@app.route('/logout')
+def logout():
 
+    session.clear()
+
+    return redirect('/login')
+
+
+@app.route('/profile')
+def profile():
+
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    user = users_collection.find_one(
+        {
+            "_id": ObjectId(session['user_id'])
+        }
+    )
+
+    return render_template(
+        'profile.html',
+        user=user
+    )    
+
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    users_collection.update_one(
+        {
+            "_id": ObjectId(session['user_id'])
+        },
+        {
+            "$set": {
+                "name": request.form['name'],
+                "email": request.form['email']
+            }
+        }
+    )
+
+    session['user_name'] = request.form['name']
+
+    flash('Profile updated successfully!', 'success')
+
+    return redirect('/profile')   
+
+
+# AUDIO FILE ACCESS
 @app.route('/uploadaudio/<path:filename>')
 def uploaded_audio(filename):
 
@@ -116,7 +279,7 @@ def uploaded_audio(filename):
         './uploadaudio',
         filename
     )
-
+ 
 def extract_features(file_path):
     """Hybrid feature extraction (MFCC + LFCC) matching notebook implementation."""
     # Load audio at its native sampling rate
