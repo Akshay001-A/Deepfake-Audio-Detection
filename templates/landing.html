@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deepfake Audio Detection</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 </head>
 
 <body>
 
-<section class="landing-hero">
+    <section class="landing-hero">
 
-    <!-- LEFT IMAGE -->
-    <div class="side-image">
-        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
-    </div>
+        <!-- LEFT IMAGE -->
+        <div class="side-image">
+            <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
+        </div>
 
-    <!-- CENTER -->
-    <div class="center-wrapper">
+        <!-- CENTER -->
+        <div class="center-wrapper">
 
-        <!-- TITLE -->
-        <h1 class="main-title">
-            Deepfake Audio <br> Detection
-        </h1>
+            <!-- TITLE -->
+            <h1 class="main-title">
+                Deepfake Audio <br> Detection
+            </h1>
 
-        <!-- CONTENT BOX -->
-        <div class="center-box">
+            <!-- CONTENT BOX -->
+            <div class="center-box">
 
-            <p class="tagline">
-                Identify whether an audio clip is genuine or manipulated using advanced signal analysis techniques.
-            </p>
+                <p class="tagline">
+                    Identify whether an audio clip is genuine or manipulated using advanced signal analysis techniques.
+                </p>
 
-            <p class="desc">
-                With the rapid growth of synthetic media, deepfake audio has become a major concern.
-                This system analyzes speech patterns, frequency variations, and acoustic features
-                such as MFCC and LFCC to accurately determine whether an audio file is real or fake.
-            </p>
+                <p class="desc">
+                    With the rapid growth of synthetic media, deepfake audio has become a major concern.
+                    This system analyzes speech patterns, frequency variations, and acoustic features
+                    such as MFCC and LFCC to accurately determine whether an audio file is real or fake.
+                </p>
 
-            <p class="desc">
-                It helps in preventing misinformation, fraud, and voice cloning attacks by providing
-                a reliable detection mechanism for audio authenticity.
-            </p>
+                <p class="desc">
+                    It helps in preventing misinformation, fraud, and voice cloning attacks by providing
+                    a reliable detection mechanism for audio authenticity.
+                </p>
+
+            </div>
+
+            <!-- BUTTON -->
+            <a href="/home" class="cta-btn">Get Started →</a>
 
         </div>
 
-        <!-- BUTTON -->
-        <a href="/home" class="cta-btn">Get Started →</a>
+        <!-- RIGHT IMAGE -->
+        <div class="side-image">
+            <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
+        </div>
 
-    </div>
-
-    <!-- RIGHT IMAGE -->
-    <div class="side-image">
-        <img src="{{ url_for('static', filename='images/deepfake.jpg') }}" alt="Deepfake Audio">
-    </div>
-
-</section>
+    </section>
 
 </body>
+
 </html>

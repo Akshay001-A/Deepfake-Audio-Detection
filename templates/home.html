@@ -3,265 +3,272 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deepfake Audio Detection</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 
 <body>
 
-<!-- MENU -->
-<div class="menu-btn" onclick="toggleSidebar()">☰</div>
+    <!-- TOP NAVBAR -->
+    <nav class="top-navbar">
 
-<!-- OVERLAY -->
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+        <div class="nav-logo" onclick="toggleSidebar()">
+            ☰ 🎙️ Deepfake Audio Detection
+        </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+        <div class="nav-right">
 
-    <div>
 
-        <h2>Deepfake</h2>
+            <a href="/profile" class="nav-btn">
+                👤 {{ session.get('user_name') }}
+            </a>
 
-        <a href="/home">🏠 Home</a>
+        </div>
 
-        <a href="/record">🎤 Record Audio</a>
+    </nav>
 
-        <!-- NEW PAGE -->
-        
 
-        <a href="/">ℹ️ About</a>
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    </div>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
 
-</div>
+        <div>
 
-<!-- MAIN -->
-<section class="home">
+            <h2>Deepfake</h2>
 
-    <div class="home-container">
+            <a href="/home">🏠 Home</a>
 
-        <div class="big-card">
+            <a href="/record">
+                🎤 Record Audio
+            </a>
 
-            <h1>Deepfake Audio Detection</h1>
+            <a href="/landing">ℹ️ About</a>
 
-            <p class="home-sub">
-                Upload a audio file and get instant detection.
-            </p>
+            <a href="/logout">🚪 Logout</a>
 
-            <!-- UPLOAD -->
-            <form action="/upload/" method="POST"
-                  enctype="multipart/form-data"
-                  class="upload-area">
+        </div>
 
-                <label class="upload-box" id="dropArea">
+        <div class="sidebar-footer">
 
-                    <input type="file"
-                           name="audio"
-                           accept=".wav,.mp3,.webm"
-                           id="fileInput">
+            <h2>{{ session.get('user_name') }}</h2>
 
-                    <span id="fileText">
-                        Click or Drag & Drop Audio (.wav)
-                    </span>
-
-                </label>
-
-                <button class="analyze-btn" type="submit">
-                    Analyze
-                </button>
-
-            </form>
-
-            <!-- ERROR -->
-            {% if error %}
-            <div class="result-section">
-
-                <div class="inner-card">
-
-                    <h3 style="color:#ff4d4d;">
-                        ❌ {{ error }}
-                    </h3>
-
-                </div>
-
-            </div>
-            {% endif %}
-
-            <!-- RESULT -->
-            {% if result %}
-            <div class="result-section">
-
-                <div class="inner-card">
-
-                    <h2 class="{% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
-                        {{ prediction }}
-                    </h2>
-
-                    <p>
-                        <b>Confidence:</b> {{ confidence }}%
-                    </p>
-
-                    <audio controls>
-                        <source src="{{ audiopath }}" type="audio/wav">
-                    </audio>
-
-                </div>
-
-                <div class="inner-card">
-
-                    <h3>Detection Info</h3>
-
-                    <p>
-                        <b>Analysis:</b> {{ analysis }}
-                    </p>
-
-                    <p>
-                        <b>Recommendation:</b> {{ recommendation }}
-                    </p>
-
-                </div>
-
-            </div>
-            {% endif %}
+            <p>Logged In</p>
 
         </div>
 
     </div>
 
-</section>
+    <!-- MAIN CONTENT -->
+    <section class="home-page">
 
-<!-- SCRIPT -->
-<script>
+        <div class="home-container">
 
-/* ========================= */
-/* SIDEBAR */
-/* ========================= */
+            <div class="big-card">
 
-function toggleSidebar() {
+                <h1>Deepfake Audio Detection</h1>
 
-    document.getElementById("sidebar").classList.toggle("active");
+                <p class="home-sub">
+                    Upload an audio file and get instant detection.
+                </p>
 
-    document.getElementById("overlay").classList.toggle("active");
-}
+                <!-- UPLOAD FORM -->
+                <form action="/upload/" method="POST" enctype="multipart/form-data" class="upload-area">
 
-/* ========================= */
-/* FILE UPLOAD + DRAG DROP */
-/* ========================= */
+                    <label class="upload-box" id="dropArea">
 
-const dropArea = document.getElementById("dropArea");
+                        <input type="file" name="audio" accept=".wav,.mp3,.webm" id="fileInput">
 
-const fileInput = document.getElementById("fileInput");
+                        <span id="fileText">
+                            Click or Drag & Drop Audio
+                        </span>
 
-const fileText = document.getElementById("fileText");
+                    </label>
 
-/* CLICK BOX *
+                    <button class="analyze-btn" type="submit">
+                        Analyze
+                    </button>
 
-/* VALIDATE FILE */
-function validateFile(file) {
+                </form>
 
-   if (
-    !file.name.toLowerCase().endsWith(".wav")
-    &&
-    !file.name.toLowerCase().endsWith(".mp3")
-    &&
-    !file.name.toLowerCase().endsWith(".webm")
-       ) {
+                <!-- ERROR -->
+                {% if error %}
+                <div class="result-section">
 
-        fileText.innerHTML = "❌ Please upload only .wav, .mp3, or .webm files";
+                    <div class="inner-card">
 
-        fileText.style.color = "#ff4d4d";
+                        <h3 style="color:#ff4d4d;">
+                            ❌ {{ error }}
+                        </h3>
 
-        fileInput.value = "";
+                    </div>
 
-        return false;
-    }
+                </div>
+                {% endif %}
 
-    fileText.innerHTML = "✅ " + file.name;
+                <!-- RESULT -->
+                {% if result %}
+                <div class="result-section">
 
-    fileText.style.color = "#00ffa2";
+                    <div class="inner-card">
 
-    return true;
-}
+                        <h2 class="{% if prediction == 'Fake Audio' %}fake{% else %}real{% endif %}">
+                            {{ prediction }}
+                        </h2>
 
-/* FILE SELECT */
-fileInput.addEventListener("change", function () {
+                        <p>
+                            <b>Confidence:</b>
+                            {{ confidence }}%
+                        </p>
 
-    if (this.files.length > 0) {
+                        <audio controls>
+                            <source src="{{ audiopath }}" type="audio/wav">
+                        </audio>
 
-        validateFile(this.files[0]);
-    }
-});
+                    </div>
 
-/* DRAG OVER */
-dropArea.addEventListener("dragover", (e) => {
+                    <div class="inner-card">
 
-    e.preventDefault();
+                        <h3>Detection Information</h3>
 
-    dropArea.style.borderColor = "#00ffa2";
+                        <p>
+                            <b>Analysis:</b>
+                            {{ analysis }}
+                        </p>
 
-    dropArea.style.background = "rgba(0,255,150,0.08)";
-});
+                        <br>
 
-/* DRAG LEAVE */
-dropArea.addEventListener("dragleave", () => {
+                        <p>
+                            <b>Recommendation:</b>
+                            {{ recommendation }}
+                        </p>
 
-    dropArea.style.borderColor = "rgba(255,255,255,0.3)";
+                    </div>
 
-    dropArea.style.background = "transparent";
-});
+                </div>
+                {% endif %}
 
-/* DROP FILE */
-dropArea.addEventListener("drop", (e) => {
+            </div>
 
-    e.preventDefault();
+        </div>
 
-    const file = e.dataTransfer.files[0];
+    </section>
 
-    if (file && validateFile(file)) {
+    <script>
 
-        fileInput.files = e.dataTransfer.files;
-    }
+        const dropArea = document.getElementById("dropArea");
+        const fileInput = document.getElementById("fileInput");
+        const fileText = document.getElementById("fileText");
 
-    dropArea.style.borderColor = "rgba(255,255,255,0.3)";
+        function validateFile(file) {
 
-    dropArea.style.background = "transparent";
-});
+            if (
+                !file.name.toLowerCase().endsWith(".wav")
+                &&
+                !file.name.toLowerCase().endsWith(".mp3")
+                &&
+                !file.name.toLowerCase().endsWith(".webm")
+            ) {
 
-/* FORM SUBMIT */
-document.querySelector(".upload-area").addEventListener("submit", function(e) {
+                fileText.innerHTML =
+                    "❌ Only .wav, .mp3 and .webm files allowed";
 
-    const file = fileInput.files[0];
+                fileText.style.color =
+                    "#ff4d4d";
 
-    if (!file) {
+                fileInput.value = "";
 
-        fileText.innerHTML = "❌ Please select a file";
+                return false;
+            }
 
-        fileText.style.color = "#ff4d4d";
+            fileText.innerHTML =
+                "✅ " + file.name;
 
-        e.preventDefault();
+            fileText.style.color =
+                "#00ffa2";
 
-        return;
-    }
+            return true;
+        }
 
-  if (
-    !file.name.toLowerCase().endsWith(".wav")
-    &&
-    !file.name.toLowerCase().endsWith(".mp3")
-    &&
-    !file.name.toLowerCase().endsWith(".webm")
-  ) {
+        fileInput.addEventListener("change", function () {
 
-      fileText.innerHTML =
-        "❌ Only .wav, .mp3 and .webm files allowed";
+            if (this.files.length > 0) {
 
-     fileText.style.color = "#ff4d4d";
+                validateFile(this.files[0]);
+            }
+        });
 
-     e.preventDefault();
-  }
-});
+        dropArea.addEventListener("dragover", (e) => {
 
-</script>
+            e.preventDefault();
+
+            dropArea.style.borderColor =
+                "#00ffa2";
+        });
+
+        dropArea.addEventListener("dragleave", () => {
+
+            dropArea.style.borderColor =
+                "rgba(255,255,255,0.3)";
+        });
+
+        dropArea.addEventListener("drop", (e) => {
+
+            e.preventDefault();
+
+            const file =
+                e.dataTransfer.files[0];
+
+            if (file && validateFile(file)) {
+
+                fileInput.files =
+                    e.dataTransfer.files;
+            }
+        });
+
+        document
+            .querySelector(".upload-area")
+            .addEventListener("submit", function (e) {
+
+                const file =
+                    fileInput.files[0];
+
+                if (!file) {
+
+                    fileText.innerHTML =
+                        "❌ Please select a file";
+
+                    fileText.style.color =
+                        "#ff4d4d";
+
+                    e.preventDefault();
+                }
+            });
+
+    </script>
+
+    <script>
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList
+                .toggle("active");
+
+            document
+                .getElementById("overlay")
+                .classList
+                .toggle("active");
+        }
+
+    </script>
+
+
 
 </body>
+
 </html>

@@ -1,0 +1,100 @@
+.record-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 20px 40px;
+}
+
+.record-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.record-card {
+    width: 95%;
+    max-width: 1000px;
+
+    padding: 60px;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    backdrop-filter: blur(25px);
+
+    text-align: center;
+
+    box-shadow: 0 0 80px rgba(0, 255, 150, 0.12);
+}
+
+.record-card h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+
+    background: linear-gradient(90deg,
+            #00ffa2,
+            #00c3ff);
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+}
+
+.home-sub {
+    opacity: .8;
+    margin-bottom: 35px;
+}
+
+.upload-area {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.record-btn {
+    padding: 15px 30px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background: linear-gradient(90deg,
+            #00ffa2,
+            #00c3ff);
+
+    color: black;
+
+    transition: .3s;
+}
+
+.record-btn:hover {
+    transform: translateY(-3px);
+}
+
+.record-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.result-section {
+    margin-top: 30px;
+}
+
+#audioPlayback {
+    width: 100%;
+    max-width: 700px;
+}
+
+#downloadLink {
+    margin-top: 20px;
+    display: inline-block;
+}
