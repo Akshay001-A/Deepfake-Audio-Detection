@@ -99,6 +99,9 @@ The system utilizes cutting-edge Machine Learning techniques, Digital Signal Pro
 - ✅ MFCC & LFCC Feature Engineering
 - ✅ Real-Time Audio Analysis
 - ✅ Browser-Based Audio Recording
+- ✅ User Authentication System
+- ✅ MongoDB Database Integration
+- ✅ Profile Management
 - ✅ Confidence-Based Predictions
 
 ### 🚀 Key Highlights
@@ -159,18 +162,57 @@ Deepfake Audio Detection demonstrates the practical application of Artificial In
 ### Browser Audio Recording
 <img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/record.png" width="100%"/>
 
+### User Registration
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/register.png" width="100%"/>
+
+### User Login
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/login.png" width="100%"/>
+
+### User Profile
+<img src="https://raw.githubusercontent.com/Akshay001-A/Deepfake-Audio-Detection/main/static/images/profile.png" width="100%"/>
+
 ---
 
 ## Features
-- **Real vs. Fake Classification** – Accurate distinction between authentic and AI‑generated speech.
-- **Confidence Scoring** – Probability score for each prediction.
-- **AI‑Generated Voice Detection** – Specialized models to spot synthetic speech artifacts.
-- **In‑Browser Playback** – Seamless audio playback after upload or recording.
-- **Detailed Analysis** – Actionable insights and recommendations.
-- **Real‑Time Processing** – Near‑instant predictions for an interactive experience.
-- **Browser Recording** – Record, pause, resume, re‑record, download, and playback within the browser.
-- **Drag‑&‑Drop Upload** – Supports WAV, MP3, and WEBM (auto‑converted via FFmpeg).
 
+### 🔐 Authentication System
+- User Registration
+- User Login
+- Password Hashing using Flask-Bcrypt
+- Session-Based Authentication
+- Secure Logout
+
+### 👤 User Profile
+- View Profile Information
+- Update Name & Email
+- Persistent MongoDB Storage
+
+### 🎧 Audio Detection
+- Real vs. Fake Classification
+- Confidence Scoring
+- AI-Generated Voice Detection
+- Detailed Analysis & Recommendations
+- Real-Time Prediction
+
+### 🎤 Audio Recording
+- Browser Audio Recording
+- Pause / Resume Recording
+- Re-record Audio
+- Download Recorded Audio
+- Audio Playback Support
+
+### 📂 Audio Upload
+- Drag & Drop Upload
+- WAV Support
+- MP3 Support
+- WEBM Support
+- Automatic FFmpeg Conversion
+
+### 🎨 User Interface
+- Responsive Design
+- Modern Dark Theme
+- Animated Sidebar Navigation
+- Mobile Friendly Layout
 ---
 
 ## 🛠️ Technology Stack
@@ -185,6 +227,13 @@ Deepfake Audio Detection demonstrates the practical application of Artificial In
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Authentication
+![Bcrypt](https://img.shields.io/badge/Bcrypt-Password%20Hashing-blue?style=for-the-badge)
+
+### Database
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge)
+![PyMongo](https://img.shields.io/badge/PyMongo-Driver-success?style=for-the-badge)
 
 ### Machine Learning
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
@@ -269,20 +318,29 @@ Deepfake-Audio-Detection/
 │
 ├── static/
 │   ├── css/
-│   ├── images/
-│   ├── uploads/
-│   └── recordings/
+│   │   ├── common.css
+│   │   ├── auth.css
+│   │   ├── home.css
+│   │   ├── landing.css
+│   │   ├── profile.css
+│   │   └── record.css
+│   │
+│   └── images/
 │
 ├── templates/
+│   ├── register.html
+│   ├── login.html
+│   ├── landing.html
 │   ├── home.html
-│   ├── index.html
 │   ├── record.html
-│   └── result.html
+│   └── profile.html
 │
-├── uploads/
+├── uploadaudio/
 │
 ├── app.py
+├── config.py
 ├── requirements.txt
+├── Dockerfile
 └── README.md
 ```
 
@@ -290,27 +348,32 @@ Deepfake-Audio-Detection/
 
 ## Requirements
 ```text
-flask
+Flask
 numpy
 librosa
 scikit-learn
 joblib
+pydub
 soundfile
-scipy
-ffmpeg
+Flask-Bcrypt
+pymongo
+dnspython
 ```
 Install them with `pip install -r requirements.txt`.
 
 ---
 
 ## Future Enhancements
-- ✅ Improve prediction accuracy
-- 🧠 Integrate CNN/LSTM deep‑learning models
-- ☁ Deploy to cloud platforms
-- 📱 Mobile application support
-- 🔐 User authentication system
-- 🎵 Additional audio format support
-- 🌍 Multi‑language audio detection
+
+- 🤖 Deep Learning Models (CNN, LSTM)
+- 🔊 Voice Cloning Detection
+- ☁ Cloud Deployment
+- 📱 Mobile Application
+- 📈 User Detection History
+- 🧠 AI Explanation Module
+- 🌍 Multi-language Support
+- 🔐 OTP-Based Authentication
+- 📊 Admin Dashboard
 
 ---
 
