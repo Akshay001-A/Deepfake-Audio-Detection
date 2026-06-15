@@ -1,7 +1,10 @@
-flask
+Flask
 numpy
 librosa
 scikit-learn
 joblib
 pydub
 soundfile
+Flask-Bcrypt
+pymongo
+dnspython
